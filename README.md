@@ -17,8 +17,9 @@ Debuggery is not Debug or Debugging!  Meaning, this is not 'real' debugging usin
 - [Colour support](#colour-support)
 - [Assert](#assert)
 - [Macros instead](#macros-instead)
-- [Spelling](#Spelling)
-- [Fucntion list](#function-list)
+- [Spelling](#spelling)
+- [Debuggery Public Mmebers](#debuggery-public-mmebers)
+- [Coding Style](#coding-style)
 
 ## Why?
 
@@ -115,7 +116,7 @@ The one exception is the boolean 'Overloaded operator' call to Debuggery, which 
 
 Since I expect someone will want to spell colour as color, there are macros that will do with automagically, so using `Debuggery.setColor(91)` is the same as using `Debuggery.setColour(91)`, and `DEBUG_SETCOLOR(91)` is the same as using `DEBUG_SETCOLOUR(91)`.
 
-## Function list
+## Debuggery Public Mmebers
 
 - ###  operator bool ()
 
@@ -189,3 +190,6 @@ Since I expect someone will want to spell colour as color, there are macros that
 
     Used in conjuction with the debug_assert macro.
 
+## Coding Style
+
+ I prefer one idea per line, full and redundant use of brackets, and I avoid terse expression like `x =+ 1` in favour of `x = x + 1`. Apparantly, the brace format is called [whitesmiths](https://en.wikipedia.org/wiki/Indentation_style#Whitesmiths), though I hadn't heard of that before '.editorconfig'.  This may show my age (but really that I have read Steve McConnell's 'Code Complete' who explain why the braces are like begin and end (with some evidence has to how to place them for clarity and why 'Allman' and 'Whitesmiths' are superior), and Charles Petzold in general who used Whitesmiths).  Beyond that this is the style I find is the cleanest and clearest (for the least [Cognitive load]( https://en.wikipedia.org/wiki/Cognitive_load)).
