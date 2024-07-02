@@ -30,3 +30,24 @@
 *.exe
 *.out
 *.app
+
+# Build outputs
+.build/
+build/
+out/
+
+# Documentation
+/docs/include
+/docs/html
+/docs/latex
+/docs/doxygen-awesome-css
+components/
+/docs
+
+#Commands
+/.cmd
+
+#config
+/.vscode
+/.vscode_nano
+/.vscode_ProMicro

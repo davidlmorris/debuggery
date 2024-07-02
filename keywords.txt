@@ -1,0 +1,10 @@
+Debuggery       KEYWORD1
+assert          KEYWORD2
+debug_assert    KEYWORD2
+initialise      KEYWORD2
+progAnnounce    KEYWORD2
+print           KEYWORD2
+println         KEYWORD2
+write           KEYWORD2
+setColour       KEYWORD2
+resetColour     KEYWORD2
