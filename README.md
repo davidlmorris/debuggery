@@ -3,7 +3,7 @@
 
 ## A helper library for getting information (including an assert, and print macro) from MCUs like and Arduino Nano an Esp32 via the usual serial port
 
-`"What sort of debuggery is this...?"`   _~ someone in Dr Dobbs Journal many decades ago._
+`"What sort of debuggery is this...?"` ~  *someone in Dr Dobbs Journal many decades ago.*
 
 Debuggery is not Debug or Debugging!  Meaning, this is not 'real' debugging using jtag (or any thing else super duper fancy with the ability to stop code, check registers amd variables and resume).
 
