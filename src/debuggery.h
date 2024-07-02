@@ -22,10 +22,12 @@
 # define DEBUG_PRINT(...)  Debuggery.print(__VA_ARGS__)
 # define DEBUG_PRINTLN(...)  Debuggery.println(__VA_ARGS__)
 # define DEBUG_SETCOLOUR(...)  Debuggery.setColour(__VA_ARGS__)
+# define DEBUG_SETCOLOR(...)  Debuggery.setColour(__VA_ARGS__)
 // However, both the C99 and C++11 standards require at least one argument, so
 // we really would prefer __VA_OPT__ from C++20 onwards.  But Arduino uses C++11.
 // We are a bit lucky that we have only one and that it is not polymorphic.
 # define DEBUG_RESETCOLOUR()  Debuggery.resetColour()
+# define DEBUG_RESETCOLOR()  Debuggery.resetColour()
 # define DEBUG_DEBUGGERY  Debuggery
 
 
@@ -39,8 +41,6 @@
 class Debuggery_ : private Print
     {
         public:
-        Debuggery_(void);
-        Debuggery_(bool bAllowColour);
         operator bool();
         void initialise(bool bAllowColour);
         void initialise(bool bAllowColour, unsigned long speed);

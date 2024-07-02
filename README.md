@@ -1,11 +1,26 @@
 
 # Debuggery
 
-## A helper library for getting information (including an assert, and print macro) from MCUs like and Arduino Nano an Esp32 via the usual serial port
+### A helper library for getting information (including an assert, and print macro) from Arduino including the Esp32 via the usual serial port
 
 `"What sort of debuggery is this...?"` ~  *someone in Dr Dobbs Journal many decades ago.*
 
 Debuggery is not Debug or Debugging!  Meaning, this is not 'real' debugging using jtag (or any thing else super duper fancy with the ability to stop code, check registers amd variables and resume).
+
+## Contents
+
+- [Why?](#why)
+- [How to use it](#how-to-use-it)
+- [How to disable debugging for a release version](#how-to-disable-debugging-for-a-release-version)
+- [Initialisation](#initialisation)
+- [Printing to the Serial port](#printing-to-the-serial-port)
+- [Colour support](#colour-support)
+- [Assert](#assert)
+- [Macros instead](#macros-instead)
+- [Spelling](#Spelling)
+- [Fucntion list](#function-list)
+
+## Why?
 
 So why? I had collected various bits and pieces that I was using as a irregular and sometimes random scaffolding code, some of which I thought might be more generally useful. Sometimes I even forgot about things I had, or had learnt before. Putting it together in a Library made the most sense. And when actually putting this together, I discovered even more (like Variadic Macros). Since the boiler plate was mostly used for Serial Out at the start of a project only when I was debugging (yes I know...) - tying it together with Debugging macros seemed like the best idea.  Note, that in `debuggery.h` you get way of identifying the type of MCU or board being used.
 
@@ -16,7 +31,7 @@ Why a separate header file, and not the INO?  Basically, because of the scope li
 
 For this reason you should include 'debug_conditionals.h' (or another file like it) in every file that you are going to use the assert macro or use Debuggery or the macros to print out some information from the Serial port.  
 
-# How to disable debugging for a release version
+## How to disable debugging for a release version
 
 To disable debugging just comment out the DEBUG_ON define in the include 'debug_conditionals.h' that you have added to your project.
 
@@ -26,11 +41,11 @@ To disable debugging just comment out the DEBUG_ON define in the include 'debug_
 
 When `DEBUG_ON` is not defined you will save about 1k of program storage and over 100 bytes of dynamic memory, and your 'release' version will run faster too, since it won't have extra, or maybe any, print statements going out to the Serial port.
 
-Why `DEBUG_ON` and not `DEBUG`?  To avoid collisions with an environment that is able to use a debug builds versus releases (now or in the future).  This is really up to you, though I would recommend using DEBUG_ON as it is distinct over DEBUG.  All of the defines I use for various aspects or parts of the program I always start with DEBUG_, so I know at a glance what they are doing there.
+Why `DEBUG_ON` and not `DEBUG`?  To avoid collisions with an environment that uses debug builds versus releases (now or in the future) since they will certainly use DEBUG.  This is really up to you, though I would recommend using DEBUG_ON as it is distinct.  All of the defines I use for various aspects or parts of the program I always start with DEBUG_, so I know at a glance what they are doing there.
 
 Surround every Debuggery use (or group, or even a whole function) with `#if DEBUG_ON ... #endif`, so that when DEBUG_ON is not defined  (of is define to be false) the code runs without any issues, OR use the [Macros instead](#macros-instead) as shown below.
 
-If you are convinced that using DEBUG (or even NDEBUG) will not result in any present or future collisions or issues, go ahead an use it. You'll probably want assert() as well.  I'm just playing it safe here.
+If you are convinced that using DEBUG (or even NDEBUG) will not result in any present or future collisions or issues, go ahead an use it. You'll probably want [assert()](#assert) as well.  I'm just playing it safe here.
 
 ## Initialisation
 
@@ -73,7 +88,7 @@ So our example code 'debug_macros.ino' when asserting the evidently false assert
 
 There is an `assert()` macro also defined in exactly the same way, however I would recommend against using this just in case your environment (perhaps later) supports the `assert()`, and it becomes unclear which one is being used.  If DEBUG_ON is undefined in 'debug_conditionals.h', (just comment it out) this macro wil be removed from the code when complied, and the loop will continue.
 
-# Macros instead
+## Macros instead
 You might want to remove the need for `#if DEBUG_ON` or #`ifndef DEBUG_ON` from your code for single line prints, too make the code easier to manage especially if you don't want Macro conditions littered everywhere.  (My personal preference is to leave them in so I can see what is meant to be there.)
 
 So for all of Debuggery you can substitute a macro in the form DEBUG_'some debuggery function'.
@@ -95,3 +110,82 @@ Note that each of these macro substitutions requires a semi colon at the end to 
 With one exception all of these macros when `DEBUG_ON` is not defined will be replace in the code with (void(0)) which means they will be ignored by the compiler.
 
 The one exception is the boolean 'Overloaded operator' call to Debuggery, which will be replaced with `(true)`, so that `if(DEBUG_DEBUGGERY)` will not result in a syntax error.  This replicates the behaviour of the default `if(Serial)` statement. See [Arduino if(Serial)](https://www.arduino.cc/reference/en/language/functions/communication/serial/ifserial/). If you do use this it would be best to wrap the use of it in an `#if DEBUG_ON ... #endif` preprocessor conditional, so the if or while statement is not unnecessarily included in the release code.
+
+## Spelling
+
+Since I expect someone will want to spell colour as color, there are macros that will do with automagically, so using `Debuggery.setColor(91)` is the same as using `Debuggery.setColour(91)`, and `DEBUG_SETCOLOR(91)` is the same as using `DEBUG_SETCOLOUR(91)`.
+
+## Function list
+
+- ###  operator bool ()
+
+    Overloaded operator to test if the serial port has started.
+
+- ### void initialise (bool bAllowColour)
+
+    Overloaded function to initialise Debuggery.
+
+- ### void initialise (bool bAllowColour, unsigned long speed)
+
+    Overloaded function to initialise Debuggery.
+
+- ### void initialise (bool bAllowColour, unsigned long speed, uint8_t config)
+
+    Overloaded function to initialise Debuggery.
+
+- ### void progAnnounce (char \*progname)
+
+    Displays the Board name and program as a hello message usually used
+    in setup when establishing the app as a start up message.
+
+- ### void progAnnounce (char \*progname, char \*greeting)
+
+    Displays the Board name and program and a greeting usually used in
+    setup when establishing the app as a start up message.
+
+- ### size_t print (char \*text, uint8_t colour)
+
+    Overloaded function to print text to the serial port with colour.
+
+- ### size_t println (char \*text, uint8_t colour)
+
+    Overloaded function to print text to the serial port with colour,
+    followed by a carriage return character (ASCII 13, or \'\\r\') and a
+    newline character (ASCII 10, or \'\').
+
+- ### size_t print (const \_\_FlashStringHelper \*text, uint8_t colour)
+
+    Overloaded function to print to the serial port with colour using
+    the F() macro.
+
+- ### size_t println (const \_\_FlashStringHelper \*text, uint8_t colour)
+
+    Overloaded function to print to the serial port with colour using
+    the F() Macro, followed by a carriage return character (ASCII 13, or
+    \'\\r\') and a newline character (ASCII 10, or \'\').
+
+- ### plus all the print and println functions from the Serial interface
+
+    See [Serial.print()](https://www.arduino.cc/reference/en/language/functions/communication/serial/print/) and [Serial.println()](https://www.arduino.cc/reference/en/language/functions/communication/serial/println/).
+
+
+- ### virtual size_t write (uint8_t byte)
+
+    Write a byte to the the serial port.
+
+- ### void setColour (uint8_t colour)
+
+    Changes the serial monitor display colour.
+
+- ### void setColour (uint8_t fgColour, uint8_t bgColour)
+
+    Changes the serial monitor foreground and background display colour.
+
+- ### void resetColour (void)
+
+    Resets the colour to the default value.
+
+- ### void \_\_assert (const char \*func, const char \*file, int line, const char \*failedexpr)
+
+    Used in conjuction with the debug_assert macro.
+

@@ -14,7 +14,9 @@
 # define DEBUG_PRINT(...)  ((void)0)
 # define DEBUG_PRINTLN(...)  ((void)0)
 # define DEBUG_SETCOLOUR(...)  ((void)0)
+# define DEBUG_SETCOLOR(...)  ((void)0)
 # define DEBUG_RESETCOLOUR()  ((void)0)
+# define DEBUG_RESETCOLOR()  ((void)0)
 # define DEBUG_DEBUGGERY  (true)
 
 #endif

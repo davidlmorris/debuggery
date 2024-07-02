@@ -1,20 +1,5 @@
 #include "debuggery.h"
 
-/// @brief Overloaded Constructor setting Debuggery defaults.
-Debuggery_::Debuggery_(void)
-    {
-    _bAllowColour = false;
-    }
-
-
-/// @brief Overloaded Constructor to allow or disable colour printing to the serial port.
-/// @param bAllowColour true to allow, false to forbid.
-Debuggery_::Debuggery_(bool bAllowColour)
-    {
-    _bAllowColour = bAllowColour;
-    }
-
-
 /// @brief Private function for shared initialisation tasks.
 /// @param bAllowColour true to allow, false to forbid.
 void Debuggery_::_init(bool bAllowColour)
