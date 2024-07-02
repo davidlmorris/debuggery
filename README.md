@@ -26,11 +26,11 @@ To disable debugging just comment out the DEBUG_ON define in the include 'debug_
 
 When `DEBUG_ON` is not defined you will save about 1k of program storage and over 100 bytes of dynamic memory, and your 'release' version will run faster too, since it won't have extra, or maybe any, print statements going out to the Serial port.
 
-Why `DEBUG_ON` and not `DEBUG`?  To avoid collisions with an environment that is able to use a debug builds versus releases (now of in the future).  Like using assert() over debug_assert (see below), this is really up to you, though I would recommend using DEBUG_ON as it is distinct.  All of the defines I use for various aspects or parts of the program I always start with DEBUG_, so I know at a glance what they are doing there.
+Why `DEBUG_ON` and not `DEBUG`?  To avoid collisions with an environment that is able to use a debug builds versus releases (now or in the future).  This is really up to you, though I would recommend using DEBUG_ON as it is distinct over DEBUG.  All of the defines I use for various aspects or parts of the program I always start with DEBUG_, so I know at a glance what they are doing there.
 
 Surround every Debuggery use (or group, or even a whole function) with `#if DEBUG_ON ... #endif`, so that when DEBUG_ON is not defined  (of is define to be false) the code runs without any issues, OR use the [Macros instead](#macros-instead) as shown below.
 
-If you are convinced that using DEBUG (or even NDEBUG) will not result in any present or future collisions or issues, go ahead an use it. You'll probably want assert() as well.  I'm just playing safe here.
+If you are convinced that using DEBUG (or even NDEBUG) will not result in any present or future collisions or issues, go ahead an use it. You'll probably want assert() as well.  I'm just playing it safe here.
 
 ## Initialisation
 
