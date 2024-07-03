@@ -24,7 +24,9 @@ Debuggery is not Debug or Debugging!  Meaning, this is not 'real' debugging usin
 
 ## Why?
 
-So why? I had collected various bits and pieces that I was using as a irregular and sometimes random scaffolding code, some of which I thought might be more generally useful. Sometimes I even forgot about things I had, or had learnt before. Putting it together in a Library made the most sense. And when actually putting this together, I discovered even more (like Variadic Macros). Since the boiler plate was mostly used for Serial Out at the start of a project only when I was debugging (yes I know...) - tying it together with Debugging macros seemed like the best idea.  Note, that in `debuggery.h` you get way of identifying the type of MCU or board being used.
+So why? I had collected various bits and pieces that I was using as a irregular and sometimes random scaffolding code, some of which I thought might be more generally useful. Sometimes I even forgot about things I had, or had learnt before. Putting it together in a Library made the most sense. And when actually putting this together, I discovered even more (like Variadic Macros). Since the boiler plate was mostly used for Serial Out at the start of a project only when I was debugging (yes I know...) - tying it together with Debugging macros seemed like the best idea.  
+
+Note, that in `debuggery.h` you get way of identifying the type of MCU or board being used, see 'src\board_name.h'.  
 
 ## How to use it
 Install the library code in the normal way.  Once installed copy the contents of `examples/debug_assert` to a working folder to create as a sketch.  The `debug_assert.INO` is just a modified 'blink' sketch.  To Debug or not is a question we decide (are building a debug or a release build?) in the 'debug_conditionals.h' header file.  
