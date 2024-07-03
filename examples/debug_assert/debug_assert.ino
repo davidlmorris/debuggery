@@ -16,7 +16,7 @@ void setup()
 #endif    
     }
 
-    // the loop function runs over and over again forever
+   // the loop function runs over and over again forever, well unless we assert something false.
 void loop()
     {
 #ifdef DEBUG_ON

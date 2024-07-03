@@ -20,6 +20,7 @@ Debuggery is not Debug or Debugging!  Meaning, this is not 'real' debugging usin
 - [Spelling](#spelling)
 - [Debuggery Public Mmebers](#debuggery-public-mmebers)
 - [Coding Style](#coding-style)
+- [Language](#language)
 
 ## Why?
 
@@ -90,7 +91,7 @@ So our example code 'debug_macros.ino' when asserting the evidently false assert
 There is an `assert()` macro also defined in exactly the same way, however I would recommend against using this just in case your environment (perhaps later) supports the `assert()`, and it becomes unclear which one is being used.  If DEBUG_ON is undefined in 'debug_conditionals.h', (just comment it out) this macro wil be removed from the code when complied, and the loop will continue.
 
 ## Macros instead
-You might want to remove the need for `#if DEBUG_ON` or #`ifndef DEBUG_ON` from your code for single line prints, too make the code easier to manage especially if you don't want Macro conditions littered everywhere.  (My personal preference is to leave them in so I can see what is meant to be there.)
+You might want to remove the need for `#if DEBUG_ON` or #`ifndef DEBUG_ON` from your code for single line prints, too make the code easier to manage especially if you don't want Macro conditions littered everywhere.
 
 So for all of Debuggery you can substitute a macro in the form DEBUG_'some debuggery function'.
 
@@ -106,7 +107,20 @@ Some examples here:
 
 `DEBUG_SETCOLOUR(91);` instead of `Debuggery.setColour(91);`
 
-Note that each of these macro substitutions requires a semi colon at the end to complete the statement.
+So this section of code...
+``` 
+# if DEBUG_ON
+Debuggery.println("Some text");
+# endif
+```
+can be replaced with:
+```
+DEBUG_PRINTLN("Some text");
+```
+...which is probably easier and neater.
+
+
+Note that each of these macro substitutions requires a semi colon at the end to complete the statement.  Easy to forget.
 
 With one exception all of these macros when `DEBUG_ON` is not defined will be replace in the code with (void(0)) which means they will be ignored by the compiler.
 
@@ -192,4 +206,10 @@ Since I expect someone will want to spell colour as color, there are macros that
 
 ## Coding Style
 
- I prefer one idea per line, full and redundant use of brackets, and I avoid terse expression like `x =+ 1` in favour of `x = x + 1`. None of this make a bit of difference to the compiled result of course.Apparantly, the brace format is called [whitesmiths](https://en.wikipedia.org/wiki/Indentation_style#Whitesmiths), though I hadn't heard of that before '.editorconfig'.  This may show my age, but really just that I have read Steve McConnell's 'Code Complete' who explains why the braces are like begin and end (with some evidence has to how to place them for clarity and why 'Allman' and 'Whitesmiths' are superior), and Charles Petzold in general who used Whitesmiths.  Beyond that this is the style I find is the cleanest and clearest (for the least [Cognitive load]( https://en.wikipedia.org/wiki/Cognitive_load)).
+ I prefer one idea per line, full and redundant use of brackets, and I avoid terse expression like `x =+ 1` in favour of `x = x + 1`. (Those of you who love the former would probably have a good crack at [International Obfuscated C Code Contest](https://en.wikipedia.org/wiki/International_Obfuscated_C_Code_Contest) too.) None of this makes a bit of difference to the compiled result of course. Apparantly, the brace format is called [whitesmiths](https://en.wikipedia.org/wiki/Indentation_style#Whitesmiths), though I hadn't heard of that before '.editorconfig'.  This may show my age, but really it is just that I have read Steve McConnell's 'Code Complete' which explains why the braces are like begin and end (with some evidence has to how to place them for clarity and why 'Allman' and 'Whitesmiths' are superior), and Charles Petzold in general who used Whitesmiths.  Beyond that this is the style I find is the cleanest and clearest (for the least [Cognitive load](https://en.wikipedia.org/wiki/Cognitive_load)).
+
+## Language
+
+Somewhere, somehow, someone will be offended by the name of this project. And I will probably have to change it. Where I grew up in Western Australia the use of the word 'bugger' was considered inoffensive slang.  My favourite aunt used it, it was used in front of children, and in front of your mother. It was even in a [Toyota television add](https://www.youtube.com/watch?v=CPYmtEQiG18) back a few decades ago. This is by way of contrast with the F-Bomb which was never used in polite company ever.  But like a lot of language 'Bugger', 'Crikey' and 'Bloody' have all fallen into less common use.  The more woke amongst us would suggest that these words had derivations respectively from Homophobic, blasphemic, or misogynistic roots, and culture, rightfully, moves with the times.  That languages changes is demonstrated by that last sentence which would not have been parsed at all well in the last century!  Of course, even [roots](https://www.smh.com.au/traveller/inspiration/its-rooted-aussie-terms-that-foreigners-just-wont-get-20140521-38nlc.html) is sort of rude in Australia.  And internationalisation has meant many words from my childhood in the 60's and 70's have vanished.  Locally, we used ging (for sling shot or childs catapault) and broggie (for skidding your bicycle sideway especially on a sandy track or road) which I havn't heard in decades.  Though 'gidgee' for fishing spear seems to have escaped its local confines (Perth Noogar aborigial word) and is apprarantly now used world wide.  
+
+Perhaps by using Debuggery I am just inviting a pull request.  ...OK I really better stop now.

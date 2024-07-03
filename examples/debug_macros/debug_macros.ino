@@ -66,7 +66,7 @@ void setup()
     }
 
 
-    // the loop function runs over and over again forever
+    // the loop function runs over and over again forever, well unless we assert something false.
 void loop()
     {
     static unsigned long loopCount = 0;
@@ -82,7 +82,7 @@ void loop()
     Serial.print(loopCount);
     Serial.println(" time(s).");
     debug_assert(true == false);// This will only trigger if DEBUG_ON is defined.
-                                // the actual code will be completely ignored by GCC 
+                                // the actual code will be completely ignored by GCC unless DEBUG_ON is defined
                                 // See https://stackoverflow.com/questions/2198950/why-is-void-0-a-no-operation-in-c-and-c
                                 // and https://stackoverflow.com/questions/25021081/what-does-the-c-precompiler-do-with-macros-defined-as-void0?rq=3.
     }
