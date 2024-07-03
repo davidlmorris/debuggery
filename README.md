@@ -27,9 +27,9 @@ Debuggery is not Debug or Debugging!  Meaning, this is not 'real' debugging usin
 So why? I had collected various bits and pieces that I was using as a irregular and sometimes random scaffolding code, some of which I thought might be more generally useful. Sometimes I even forgot about things I had, or had learnt before. Putting it together in a Library made the most sense. And when actually putting this together, I discovered even more (like Variadic Macros). Since the boiler plate was mostly used for Serial Out at the start of a project only when I was debugging (yes I know...) - tying it together with Debugging macros seemed like the best idea.  Note, that in `debuggery.h` you get way of identifying the type of MCU or board being used.
 
 ## How to use it
-Install the library code in the normal way.  Once installed copy the contents of `examples/debug_assert` to a working folder to create as a sketch.  The `debug_assert.INO` is just a modified 'blink' sketch.  To Debug or not is a question we decide (if we are building a debug or a release build) in the 'debug_conditionals.h' header file.  
+Install the library code in the normal way.  Once installed copy the contents of `examples/debug_assert` to a working folder to create as a sketch.  The `debug_assert.INO` is just a modified 'blink' sketch.  To Debug or not is a question we decide (are building a debug or a release build?) in the 'debug_conditionals.h' header file.  
 
-Why a separate header file, and not just in the sketch.INO?  Basically, because of the scope limitations of preprocessing in C++ it is not possible to have something defined in one C++ file and have it also show up in another .cpp file, even if they are in the same folder.  Now while this isn't true of .ino files since all the INO files in the project folder are concatenated together before preprocessing to act as one big INO file, it is true if you have other .cpp files present. So if you **only** use .ino files you can get away with included to contents of 'debug_conditionals.h' in your main .ino file, I guess.  However, I wouldn't recommend it - because if you ever add a .cpp file to your project you don't want to be taken by the surprise the hard way (you know, after hours or work tracking down a non-existant bug).  If you are surprised now about this you are not alone, for a while I assumed that Arduino treated INO files and .cpp file in the same way.  The issue has been around for a while, see: <https://github.com/arduino/Arduino/issues/1841>.
+Why a separate header file, and not just in the sketch.INO?  Basically, because of the scope limitations of preprocessing in C++ where it is not possible to have something defined in one C++ file and have it also show up in another .cpp file, even if they are in the same folder.  Now while this isn't true of .ino  files since all the INO files in the Arduino project folder are concatenated together before preprocessing to act as one big INO file, it is true if you have other .cpp files present. So if you **only** use .ino files you can get away with included to contents of 'debug_conditionals.h' in your main .ino file, I guess.  However, I wouldn't recommend it - because if you ever add a .cpp file to your project you don't want to be taken by the surprise the hard way (you know, after hours or work tracking down a non-existant bug).  If you are surprised now about this you are not alone, for a while I naturally assumed that Arduino treated INO files and .cpp file in the same way.  The [issue](https://github.com/arduino/Arduino/issues/1841) has been around for a while.
 
 For this reason you should include 'debug_conditionals.h' (or another file like it) in every file that you are going to use the assert macro or use Debuggery or the macros to print out some information from the Serial port.  
 
@@ -43,7 +43,7 @@ To disable debugging just comment out the DEBUG_ON define in the include 'debug_
 
 When `DEBUG_ON` is not defined you will save about 1k of program storage and over 100 bytes of dynamic memory, and your 'release' version will run faster too, since it won't have extra, or maybe any, print statements going out to the Serial port.
 
-Why `DEBUG_ON` and not `DEBUG`?  To avoid collisions with an environment that uses debug builds versus releases (now or in the future) since they will certainly use DEBUG.  This is really up to you, though I would recommend using DEBUG_ON as it is distinct.  All of the defines I use for various aspects or parts of the program I always start with DEBUG_, so I know at a glance what they are doing there.
+Why `DEBUG_ON` and not `DEBUG`?  It is to avoid potential collisions with an IDE environment that uses debug builds versus releases (now or in the future) since they will certainly use DEBUG.  This is really up to you, as DEBUG will probably work now, though I would recommend using DEBUG_ON as it is distinct.  All of the defines I use for various aspects or parts of the program I always start with DEBUG_, so I know at a glance what they are doing there.
 
 Surround every Debuggery use (or group, or even a whole function) with `#if DEBUG_ON ... #endif`, so that when DEBUG_ON is not defined  (of is define to be false) the code runs without any issues, OR use the [Macros instead](#macros-instead) as shown below.
 
@@ -59,9 +59,9 @@ Debuggery implements all of the Serial ports print and println commands, so for 
 
 ## Colour support
 
-In addition, optionally for serial monitors that support colour (like VSCode) you can set the colour to print, or use some variations of Debuggery.print to print text in colour.  To print numbers you can use `setColour(ForegroundColour)` (note the Commonwealth spelling) or `setColour(ForegroundColour, BackgroundColour)` to turn of a colour, and `resetColour()` to change it back to default.  The colours to be used can be found on the [ANSI escape code](https://en.wikipedia.org/wiki/ANSI_escape_code) wikipedia page.
+In addition, optionally for serial monitors that support colour (like VSCode) you can set the colour to print, or use some variations of Debuggery.print to print text in colour.  To print numbers you can use `setColour(ForegroundColour)` (note the Commonwealth spelling) or `setColour(ForegroundColour, BackgroundColour)` to turn of a colour, and `resetColour()` to change it back to default.  The colours to be used can be found on the [ANSI escape code](https://en.wikipedia.org/wiki/ANSI_escape_code) wikipedia page.  See [spelling](#spelling) below if you want to use color instead of colour (basically you can).
 
-These colours allowed:
+These colours are allowed:
 | FG | BG | Colour |
 |-----|-----|-----------------|
 | 30 |  40 |  Black   |
@@ -88,7 +88,7 @@ So our example code 'debug_macros.ino' when asserting the evidently false assert
 
 ```Assertion failed: (true == false), function:loop, file:C:\Home\Github\Debuggery\examples\debug_assert\debug_assert.ino, line:32.```
 
-There is an `assert()` macro also defined in exactly the same way, however I would recommend against using this just in case your environment (perhaps later) supports the `assert()`, and it becomes unclear which one is being used.  If DEBUG_ON is undefined in 'debug_conditionals.h', (just comment it out) this macro wil be removed from the code when complied, and the loop will continue.
+There is an `assert()` macro also defined in exactly the same way, however I would recommend against using this just in case your environment (perhaps later) supports the `assert()`, and it becomes unclear which one is being used.  If DEBUG_ON is undefined in 'debug_conditionals.h', (just comment it out) this macro wil be removed from the code when complied (though it is still present in the source code), and the loop will continue as expected.
 
 ## Macros instead
 You might want to remove the need for `#if DEBUG_ON` or #`ifndef DEBUG_ON` from your code for single line prints, too make the code easier to manage especially if you don't want Macro conditions littered everywhere.
@@ -110,21 +110,20 @@ Some examples here:
 So this section of code...
 ``` 
 # if DEBUG_ON
-Debuggery.println("Some text");
+  Debuggery.println("Some text");
 # endif
 ```
 can be replaced with:
 ```
-DEBUG_PRINTLN("Some text");
+  DEBUG_PRINTLN("Some text");
 ```
 ...which is probably easier and neater.
 
-
 Note that each of these macro substitutions requires a semi colon at the end to complete the statement.  Easy to forget.
 
-With one exception all of these macros when `DEBUG_ON` is not defined will be replace in the code with (void(0)) which means they will be ignored by the compiler.
+With one exception all of these macros when `DEBUG_ON` is not defined will be replaced in the code with (void(0)) which means they will be ignored by the compiler.
 
-The one exception is the boolean 'Overloaded operator' call to Debuggery, which will be replaced with `(true)`, so that `if(DEBUG_DEBUGGERY)` will not result in a syntax error.  This replicates the behaviour of the default `if(Serial)` statement. See [Arduino if(Serial)](https://www.arduino.cc/reference/en/language/functions/communication/serial/ifserial/). If you do use this it would be best to wrap the use of it in an `#if DEBUG_ON ... #endif` preprocessor conditional, so the if or while statement is not unnecessarily included in the release code.
+The exception is the boolean 'Overloaded operator' call to Debuggery, which will be replaced with `(true)`, so that `if(DEBUG_DEBUGGERY)` will not result in a syntax error.  This replicates the behaviour of the default `if(Serial)` statement. See [Arduino if(Serial)](https://www.arduino.cc/reference/en/language/functions/communication/serial/ifserial/). If you do use this it would be best to wrap the use of it in an `#if DEBUG_ON ... #endif` preprocessor conditional, so the if or while statement is not unnecessarily included in the release code.
 
 ## Spelling
 
@@ -179,7 +178,7 @@ Since I expect someone will want to spell colour as color, there are macros that
     the F() Macro, followed by a carriage return character (ASCII 13, or
     \'\\r\') and a newline character (ASCII 10, or \'\').
 
-- ### plus all the print and println functions from the Serial interface
+- ### "+ all the print and println functions from the Arduino Serial interface"
 
     See [Serial.print()](https://www.arduino.cc/reference/en/language/functions/communication/serial/print/) and [Serial.println()](https://www.arduino.cc/reference/en/language/functions/communication/serial/println/).
 
@@ -206,10 +205,18 @@ Since I expect someone will want to spell colour as color, there are macros that
 
 ## Coding Style
 
- I prefer one idea per line, full and redundant use of brackets, and I avoid terse expression like `x =+ 1` in favour of `x = x + 1`. (Those of you who love the former would probably have a good crack at [International Obfuscated C Code Contest](https://en.wikipedia.org/wiki/International_Obfuscated_C_Code_Contest) too.) None of this makes a bit of difference to the compiled result of course. Apparantly, the brace format is called [whitesmiths](https://en.wikipedia.org/wiki/Indentation_style#Whitesmiths), though I hadn't heard of that before '.editorconfig'.  This may show my age, but really it is just that I have read Steve McConnell's 'Code Complete' which explains why the braces are like begin and end (with some evidence has to how to place them for clarity and why 'Allman' and 'Whitesmiths' are superior), and Charles Petzold in general who used Whitesmiths.  Beyond that this is the style I find is the cleanest and clearest (for the least [Cognitive load](https://en.wikipedia.org/wiki/Cognitive_load)).
+ I prefer one idea per line, full and redundant use of brackets, and I avoid terse expression like `x =+ 1` in favour of `x = x + 1`. (Terse code is only useful, in my view, for those having a crack at the [International Obfuscated C Code Contest](https://en.wikipedia.org/wiki/International_Obfuscated_C_Code_Contest)!) None of this makes a bit of difference to the compiled result, of course.
+ 
+ Apparantly, the brace format is called [whitesmiths](https://en.wikipedia.org/wiki/Indentation_style#Whitesmiths), though I hadn't heard of that before using '.editorconfig'.  Using whitesmiths may show my age, but really it is just that I have read Steve McConnell's 'Code Complete' which explains why the braces are like begin and end (with some evidence has to how to place them for clarity and why 'Allman' and 'Whitesmiths' are superior), and Charles Petzold in general who used Whitesmiths.  Beyond that, this is the style I find is the cleanest and clearest (for the least [Cognitive load](https://en.wikipedia.org/wiki/Cognitive_load)).
 
 ## Language
 
-Somewhere, somehow, someone will be offended by the name of this project. And I will probably have to change it. Where I grew up in Western Australia the use of the word 'bugger' was considered inoffensive slang.  My favourite aunt used it, it was used in front of children, and in front of your mother. It was even in a [Toyota television add](https://www.youtube.com/watch?v=CPYmtEQiG18) back a few decades ago. This is by way of contrast with the F-Bomb which was never used in polite company ever.  But like a lot of language 'Bugger', 'Crikey' and 'Bloody' have all fallen into less common use.  The more woke amongst us would suggest that these words had derivations respectively from Homophobic, blasphemic, or misogynistic roots, and culture, rightfully, moves with the times.  That languages changes is demonstrated by that last sentence which would not have been parsed at all well in the last century!  Of course, even [roots](https://www.smh.com.au/traveller/inspiration/its-rooted-aussie-terms-that-foreigners-just-wont-get-20140521-38nlc.html) is sort of rude in Australia.  And internationalisation has meant many words from my childhood in the 60's and 70's have vanished.  Locally, we used ging (for sling shot or childs catapault) and broggie (for skidding your bicycle sideway especially on a sandy track or road) which I havn't heard in decades.  Though 'gidgee' for fishing spear seems to have escaped its local confines (Perth Noogar aborigial word) and is apprarantly now used world wide.  
+Somewhere, somehow, someone will be offended by the name of this project. And I will probably have to change it. 
 
-Perhaps by using Debuggery I am just inviting a pull request.  ...OK I really better stop now.
+Where I grew up in Western Australia the use of the word 'bugger' was considered inoffensive slang.  My favourite aunt used it, it was used in front of children, and in front of your mother. It was even in a [Toyota television add](https://www.youtube.com/watch?v=CPYmtEQiG18) back a few decades ago. This is by way of contrast with the F-Bomb which was never used in polite company ever.  But like a lot of language 'Bugger', 'Crikey' and 'Bloody' have all fallen into less common use.  The more woke amongst us would suggest that these words had derivations respectively from Homophobic, blasphemic, or misogynistic roots, and culture, rightfully, moves with the times.
+
+That languages changes is demonstrated by that last sentence which would not have been parsed at all well in the last century!  Of course, even [roots](https://www.smh.com.au/traveller/inspiration/its-rooted-aussie-terms-that-foreigners-just-wont-get-20140521-38nlc.html) is sort of rude in Australia.  And internationalisation has meant many words from my childhood in the 60's and 70's have vanished.  Locally, we used ging (for sling shot or childs catapault) and broggie (for skidding your bicycle sideway especially on a sandy track or road) which I havn't heard in decades.  Though 'gidgee' for fishing spear seems to have escaped its local confines (Perth Noogar aborigial word) and is apprarantly now used world wide.  
+
+Perhaps by using Debuggery I am just inviting a pull request...
+
+  ...OK, I really should stop now.
