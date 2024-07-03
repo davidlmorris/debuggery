@@ -1,7 +1,7 @@
 
 # Debuggery
 
-### A helper library for getting information (including an assert, and print macro) from Arduino including the Esp32 via the usual serial port
+## A helper library for getting information (including an assert, and print macro) from Arduino including the Esp32 via the usual serial port
 
 `"What sort of debuggery is this...?"` ~  *someone in Dr Dobbs Journal many decades ago.*
 
