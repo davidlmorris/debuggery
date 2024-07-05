@@ -58,6 +58,12 @@ void setup()
     DEBUG_PRINTLN(127);
     DEBUG_PRINTLN(127, HEX);
     DEBUG_PRINTLN(127, BIN);
+    DEBUG_PRINTLN(F("And floating point variations."));
+    DEBUG_PRINTLN(1234.567897, 5);
+    DEBUG_PRINTLN(1234.567897, 4);
+    DEBUG_PRINTLN(1234.567897, 2);
+    DEBUG_PRINTLN(1234.567897, 1);
+    DEBUG_PRINTLN(1234.567897, 0);
     DEBUG_RESETCOLOUR();
     DEBUG_PRINTLN(F("And now back to the default colours."));
 
@@ -78,7 +84,7 @@ void loop()
     DEBUG_PRINTLN(F("Off"));
     digitalWrite(LED_BUILTIN, LOW);   // turn the LED off by making the voltage LOW
     delay(1000);                      // wait for a second
-    Serial.print("Successfully flashed ");
+    Serial.print("Successfully looped ");
     Serial.print(loopCount);
     Serial.println(" time(s).");
     debug_assert(true == false);// This will only trigger if DEBUG_ON is defined.

@@ -51,3 +51,14 @@ components/
 /.vscode
 /.vscode_nano
 /.vscode_ProMicro
+/.vscode_ESP32_DEV
+/.vscode_doitESP32devkitV1
+
+#examples
+/examples/avoid_overhead
+
+
+#examples
+/assets/class_debuggery__.png
+
+

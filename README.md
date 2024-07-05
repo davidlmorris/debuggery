@@ -18,9 +18,13 @@ Debuggery is not Debug or Debugging!  Meaning, this is not 'real' debugging usin
 - [Assert](#assert)
 - [Macros instead](#macros-instead)
 - [Spelling](#spelling)
-- [Debuggery Public Mmebers](#debuggery-public-mmebers)
+- [Debuggery Public Mmebers](#debuggery-public-members)
 - [Coding Style](#coding-style)
 - [Language](#language)
+
+## How it works
+
+Unlike some other debug utilities library this will print floating point numbers (as per the Serial library).  It extends the Print amd Printable classes, also  used by Serial, LiquidCrystal, Ethernet and WifI, and so prints in exactly the same way with out adding much overhead to your code (about 1k).  
 
 ## Why?
 
@@ -44,17 +48,19 @@ To disable debugging just comment out the DEBUG_ON define in the include 'debug_
 
 ```# define DEBUG_ON true // comment this out to remove debuggery altogether.```
 
-When `DEBUG_ON` is not defined you will save about 1k of program storage and over 100 bytes of dynamic memory, and your 'release' version will run faster too, since it won't have extra, or maybe any, print statements going out to the Serial port.
+When `DEBUG_ON` is not defined you will save program storage  and dynamic memory.  With the example code it will be about 1k of program storage and over 100 bytes of dynamic memory, and your 'release' version will likely run faster too, since it won't have extra, or maybe any, print statements going out to the Serial port.  Unfortunately, if you include a reference to the header file 'debuggery.h' in an INO file even if #defined out (as in "debug_conditionals.h"), Arduino seems to find a way of including the associated cpp file. This is true of all library headers that you might add, not just Debuggery! See this answer from Nick Gammon on [StackExchange](https://arduino.stackexchange.com/a/13182/100121) for an hint about why.
 
 Why `DEBUG_ON` and not `DEBUG`?  It is to avoid potential collisions with an IDE environment that uses debug builds versus releases (now or in the future) since they will certainly use DEBUG.  This is really up to you, as DEBUG will probably work now, though I would recommend using DEBUG_ON as it is distinct.  All of the defines I use for various aspects or parts of the program I always start with DEBUG_, so I know at a glance what they are doing there.
 
 Surround every Debuggery use (or group, or even a whole function) with `#if DEBUG_ON ... #endif`, so that when DEBUG_ON is not defined  (of is define to be false) the code runs without any issues, OR use the [Macros instead](#macros-instead) as shown below.
 
-If you are convinced that using DEBUG (or even NDEBUG) will not result in any present or future collisions or issues, go ahead an use it. You'll probably want [assert()](#assert) as well.  I'm just playing it safe here.
+If you are convinced that using DEBUG (or even NDEBUG) will not result in any present or future collisions or issues, go ahead an use it. You'll probably want [assert()](#assert) as well (again not recommended).  I'm just playing it safe here.
 
 ## Initialisation
 
-Debuggery must be initialised using `Debuggery.initialise(true)` (or false for no colour). You won't want colour if just using the Arduino IDE, as that won't handle colour, and you'll see extra junk characters instead.  If you have a Serial port open already, it will flush the current one and re-open it at the default speed of 115200.
+Debuggery must be initialised using `Debuggery.initialise(true)` (or false for no colour). VScode will handle [colour](#colour-support). You won't want colour if just using the Arduino IDE, as that doesn't handle colour and you'll see extra junk characters instead.  
+
+If you have a Serial port open already, 'initialise' will flush the Serial port and re-open it at the default speed of 115200, or at the speed your specify.
 
 ## Printing to the Serial port
 
@@ -62,7 +68,7 @@ Debuggery implements all of the Serial ports print and println commands, so for 
 
 ## Colour support
 
-In addition, optionally for serial monitors that support colour (like VSCode) you can set the colour to print, or use some variations of Debuggery.print to print text in colour.  To print numbers you can use `setColour(ForegroundColour)` (note the Commonwealth spelling) or `setColour(ForegroundColour, BackgroundColour)` to turn of a colour, and `resetColour()` to change it back to default.  The colours to be used can be found on the [ANSI escape code](https://en.wikipedia.org/wiki/ANSI_escape_code) wikipedia page.  See [spelling](#spelling) below if you want to use color instead of colour (basically you can).
+You can set the colour to print, or use some overloads of Debuggery.print to print text in colour.  To change the colour of text can use `setColour(ForegroundColour)` (note the Commonwealth [spelling](#spelling)) or `setColour(ForegroundColour, BackgroundColour)` to turn of a colour, and `resetColour()` to change it back to default.  The colours to be used can be found on the [ANSI escape code](https://en.wikipedia.org/wiki/ANSI_escape_code) wikipedia page.  See [spelling](#spelling) below if you want to use color instead of colour (basically you can).
 
 These colours are allowed:
 | FG | BG | Colour |
@@ -140,7 +146,7 @@ I can't.  As I discovered when I found how to get spell check for Readme.md file
 
 But more importantly... since I expect someone will want to spell colour as color, there are macros that will do with automagically, so using `Debuggery.setColor(91)` is the same as using `Debuggery.setColour(91)`, and `DEBUG_SETCOLOR(91)` is the same as using `DEBUG_SETCOLOUR(91)`.
 
-## Debuggery Public Mmebers
+## Debuggery Public Members
 
 - ###  operator bool ()
 
@@ -158,12 +164,12 @@ But more importantly... since I expect someone will want to spell colour as colo
 
     Overloaded function to initialise Debuggery.
 
-- ### void progAnnounce (char \*progname)
+- ### void progAnnounce (char \*programmeName)
 
     Displays the Board name and program as a hello message usually used
     in setup when establishing the app as a start up message.
 
-- ### void progAnnounce (char \*progname, char \*greeting)
+- ### void progAnnounce (char \*programmeName, char \*greeting)
 
     Displays the Board name and program and a greeting usually used in
     setup when establishing the app as a start up message.
@@ -215,15 +221,15 @@ But more importantly... since I expect someone will want to spell colour as colo
 
 ## Coding Style
 
- I prefer one idea per line, full and redundant use of brackets, and I avoid terse expression like `x =+ 1` in favour of `x = x + 1`. (Terse code is only useful, in my view, for those having a crack at the [International Obfuscated C Code Contest](https://en.wikipedia.org/wiki/International_Obfuscated_C_Code_Contest)!) None of this makes a bit of difference to the compiled result, of course.
+ I prefer one idea per line, full and redundant use of brackets and braces, and I avoid terse expression like `x =+ 2` in favour of `x = x + 2`, making an exception for for the obvious `x++`. (Terse code is only useful, in my view, for those having a crack at the [International Obfuscated C Code Contest](https://en.wikipedia.org/wiki/International_Obfuscated_C_Code_Contest)!) None of this makes a bit of difference to the compiled result, of course.
 
- Apparently, the brace format is called [whitesmiths](https://en.wikipedia.org/wiki/Indentation_style#Whitesmiths), though I hadn't heard of that before using '.editorconfig'.  Using whitesmiths may show my age, but really it is just that I have read Steve McConnell's 'Code Complete' which explains why the braces are like begin and end (with some evidence has to how to place them for clarity and why 'Allman' and 'Whitesmiths' are superior), and Charles Petzold in general who used Whitesmiths.  Beyond that, this is the style I find is the cleanest and clearest (for the least [Cognitive load](https://en.wikipedia.org/wiki/Cognitive_load)).
+ The brace format is called [whitesmiths](https://en.wikipedia.org/wiki/Indentation_style#Whitesmiths), though I hadn't heard of that before using '.editorconfig'.  Using whitesmiths may show my age, but really it is just that I have read Steve McConnell's 'Code Complete' which explains why the braces are like 'begin' and 'end' (with some evidence has to how to place them for clarity and why 'Allman' and 'Whitesmiths' are superior), and Charles Petzold in general who used Whitesmiths.  Beyond that, this is the style I find is the cleanest and clearest (for the least [Cognitive load](https://en.wikipedia.org/wiki/Cognitive_load)), and is the preferred coding style in my repositories.
 
 ## Language
 
 Somewhere, somehow, someone will be offended by the name of this project. And I will probably have to change it.
 
-Where I grew up in Western Australia the use of the word 'bugger' was considered inoffensive slang.  My favourite aunt used it, it was used in front of children, and in front of your mother. It was even in a [Toyota television add](https://www.youtube.com/watch?v=CPYmtEQiG18) back a few decades ago. This is by way of contrast with the F-Bomb which was never used in polite company ever.  But like a lot of language 'Bugger', 'Crikey' and 'Bloody' have all fallen into less common use.  The more woke amongst us would suggest that these words had derivations respectively from Homophobic, blasphemous, or misogynistic roots, and culture, rightfully, moves with the times.
+Where I grew up in Western Australia the use of the word 'bugger' was considered inoffensive slang.  My favourite aunt used it, it was used in front of children, and in front of your mother. It was even in a [Toyota television add](https://www.youtube.com/watch?v=CPYmtEQiG18) back a few decades ago. This is by way of contrast with the F-Bomb which was never used in polite company ever.  But like a lot of language 'Bugger', 'Crikey' and 'Bloody' have all fallen into less common use.  The more woke amongst us would suggest that these words had derivations respectively from Homophobic, blasphemous, or misogynistic roots, and that culture, rightfully, moves with the times.
 
 That language changes is demonstrated by that last sentence which would not have been parsed at all well in the last century!  Of course, even [roots](https://www.smh.com.au/traveller/inspiration/its-rooted-aussie-terms-that-foreigners-just-wont-get-20140521-38nlc.html) is sort of rude in Australia.  And internationalisation has meant many words from my childhood in the 60's and 70's have vanished.  Locally, we used ging (for sling shot or child's catapult) and broggie (for skidding your bicycle sideway especially on a sandy track or road) which I haven't heard in decades.  Though 'gidgee' for fishing spear seems to have escaped its local confines (Perth Noongar aboriginal word) and is apparently now used world wide.  
 

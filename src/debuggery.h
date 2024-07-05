@@ -1,9 +1,10 @@
 #ifndef debuggery_h
 # define debuggery_h
+
 # include <Arduino.h>
 # include <Print.h>
 # include "board_name.h"
-// # include "macro_util.h"
+
 // "What sort of debuggery is this...?"
 //          ~ someone in 'Dr Dobbs Journal' decades ago.
 
@@ -76,3 +77,4 @@ class Debuggery_ : private Print
 extern Debuggery_ Debuggery;
 
 #endif
+
