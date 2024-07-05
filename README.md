@@ -98,9 +98,9 @@ These colours are allowed:
 
 ## Assert
 
-An assert macro is provided that uses Debuggery to print to the serial port.  When `DEBUG_ON` is undefined (see: [How to use it](#how-to-use-it) above) the `debug_assert()` macro is replaced by `((void)0)` which tells the compiler to do nothing, and not emit any code for the statement.  When `DEBUG_ON` is defined `debug_assert(some_boolean_test_condition)` will call `Debuggery.__assert(...)` passing the detail of the error and the location. If the condition is false, `Debuggery.__assert` will print 'assertion failed' follow by the condition that caused it, the function (if present), the file, and the line number.  And then the application will be aborted (terminated), or in the case of the Esp32 put into an infinite loop, since the Esp32 will reboot after an abort.
+An assert macro is provided that uses Debuggery to print to the serial port.  When `DEBUG_ON` is undefined (see: [How to use it](#how-to-use-it) above) the `debug_assert()` macro is replaced by `((void)0)` which tells the compiler to do nothing, and not emit any code for the statement.  When `DEBUG_ON` is defined `debug_assert(some_boolean_test_condition)` will call `Debuggery.__assert(...)` passing the detail of the error and the location. If the condition is false, `Debuggery.__assert` will print 'assertion failed' follow by the condition that caused it, the function (if present), the file, and the line number.  And then the application will be aborted (terminated), or in the case of the Esp32 put into an infinite loop, since the Esp32 will reboot after an abort making it harder to read the error.
 
-So our example code 'debug_macros.ino' when asserting the evidently false assertion `debug_assert(true == false)` the following being printed:
+So our example code 'debug_macros.ino' when asserting the evidently false assertion `debug_assert(true == false)` the following will be printed on the serial monitor:
 
 ```Assertion failed: (true == false), function:loop, file:C:\Home\Github\Debuggery\examples\debug_assert\debug_assert.ino, line:32.```
 
