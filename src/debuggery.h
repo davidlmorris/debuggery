@@ -11,8 +11,7 @@
 #  define assert(e) ((e) ? (void)0 : Debuggery.__assert(__func__, __FILE__, __LINE__, #e))
 #  define debug_assert(e) ((e) ? (void)0 : Debuggery.__assert(__func__, __FILE__, __LINE__, #e))
 
-#  define setColor(x)  setColour(x);
-#  define setColor(x,y)  setColour(x,y);
+#  define setColor(...)  setColour(__VA_ARGS__);
 
 // Variadic Macros to substitute Debuggery calls so we can undefine then
 // without needing surround code with #if DEBUG_ON et al.
@@ -41,22 +40,22 @@
 /// if required.
 class Debuggery_ : private Print
     {
-        public:
+    public:
         operator bool();
         void initialise(bool bAllowColour);
         void initialise(bool bAllowColour, unsigned long speed);
         void initialise(bool bAllowColour, unsigned long speed, uint8_t config);
-        void progAnnounce(char* progname);
-        void progAnnounce(char* progname, char* greeting);
+        void progAnnounce(const char* progName);
+        void progAnnounce(const char* progName, const char* greeting);
 
         size_t print(char* text, uint8_t colour);
         size_t println(char* text, uint8_t colour);
         size_t print(const __FlashStringHelper* text, uint8_t colour);
         size_t println(const __FlashStringHelper* text, uint8_t colour);
-        virtual size_t write(uint8_t byte);
         // ~See Stroustrup 'The C++ Programming Language' 2nd ed r.3.3.1.3
         // for what seems like an out of place virtual.
         // note that Print::write is virtual.
+        virtual size_t write(uint8_t byte);
 
         void setColour(uint8_t colour);
         void setColour(uint8_t fgColour, uint8_t bgColour);
@@ -66,11 +65,11 @@ class Debuggery_ : private Print
         using Print::print;
         using Print::write;
 
-        void __assert(const char* func, const char* file, int line, const char* failedexpr);
+        void __assert(const char* func, const char* file, int line, const char* failedExpr);
 
-        private:
+    private:
         void _init(bool bAllowColour);
-        void _progAnnounce(char* progname, char* greeting);
+        void _progAnnounce(const char* progname, const char* greeting);
         bool _bAllowColour;
     };
 

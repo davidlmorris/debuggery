@@ -10,6 +10,12 @@
             "PROGANNOUNCE",
             "RESETCOLOUR",
             "SETCOLOUR"
+        ],
+        "cSpell.language": "en-AU"
+    },
+    "extensions": {
+        "recommendations": [
+            "streetsidesoftware.code-spell-checker-australian-english"
         ]
     }
 }

@@ -35,10 +35,10 @@ void setup()
 #endif 
     // use Debuggery.initialise(false); if using the Arduino IDE.
 #ifndef DEBUG_ON        
-    Serial.println("Blink Sketch " __FILE__ " Built: " __DATE__ " " __TIME__);
+    Serial.println(F("Blink Sketch " __FILE__ " Built: " __DATE__ " " __TIME__));
 #endif
     Serial.println(F("This will be printed regardless of the state of DEBUG_ON"));
-    DEBUG_PROGANNOUNCE("Blink Sketch", __FILE__ " Built: " __DATE__ " " __TIME__);
+    DEBUG_PROGANNOUNCE(F("Blink Sketch", __FILE__ " Built: " __DATE__ " " __TIME__));
     // For this next bit - see some clues in <debuggery.h>
 #if defined(ARDUINO_AVR_NANO)
     DEBUG_PRINTLN(F("Something to say about the Nano here."), 92);

@@ -105,7 +105,7 @@ void Debuggery_::__assert(const char* func, const char* file, int line, const ch
 /// usually used in setup when establishing the app as a start up message.
 /// @param progName Name of the application
 /// @param greeting A greeting or version number as a char*.
-void Debuggery_::progAnnounce(char* progName, char* greeting)
+void Debuggery_::progAnnounce(const char* progName, const char* greeting)
     {
     _progAnnounce(progName, greeting);
     }
@@ -114,13 +114,13 @@ void Debuggery_::progAnnounce(char* progName, char* greeting)
 /// @brief Displays the  Board name, progName and a greeting as a hello message
 /// usually used in setup when establishing the app as a start up message.
 /// @param progName A string expressing the name of the program.
-void Debuggery_::progAnnounce(char* progName)
+void Debuggery_::progAnnounce(const char* progName)
     {
     _progAnnounce(progName, NULL);
     }
 
 
-void Debuggery_::_progAnnounce(char* progName, char* greeting)
+void Debuggery_::_progAnnounce(const char* progName, const char* greeting)
     {
     setColour(94); // bright blue
     print(progName);
