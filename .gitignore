@@ -57,6 +57,8 @@ components/
 #examples
 /examples/avoid_overhead
 
+#temporary
+library.json
 
 #examples
 /assets/class_debuggery__.png

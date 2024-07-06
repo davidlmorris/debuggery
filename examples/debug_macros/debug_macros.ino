@@ -38,7 +38,7 @@ void setup()
     Serial.println(F("Blink Sketch " __FILE__ " Built: " __DATE__ " " __TIME__));
 #endif
     Serial.println(F("This will be printed regardless of the state of DEBUG_ON"));
-    DEBUG_PROGANNOUNCE(F("Blink Sketch", __FILE__ " Built: " __DATE__ " " __TIME__));
+    DEBUG_PROGANNOUNCE("Blink Sketch", __FILE__ " Built: " __DATE__ " " __TIME__);
     // For this next bit - see some clues in <debuggery.h>
 #if defined(ARDUINO_AVR_NANO)
     DEBUG_PRINTLN(F("Something to say about the Nano here."), 92);

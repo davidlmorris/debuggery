@@ -111,6 +111,7 @@ void Debuggery_::progAnnounce(const char* progName, const char* greeting)
     }
 
 
+
 /// @brief Displays the  Board name, progName and a greeting as a hello message
 /// usually used in setup when establishing the app as a start up message.
 /// @param progName A string expressing the name of the program.

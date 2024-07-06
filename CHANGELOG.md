@@ -9,6 +9,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.0.5 - 2024-07-06
+ - fixed regression from 1.0.4 'no matching function' in assert_macros.ino in examples.
+
 ## 1.0.4 - 2024-07-06
 - Added const to `void progAnnounce(const char* progName);` and overloads and associated functions.
 - Made SETCOLOUR and SETCOLOR macros variadic.
