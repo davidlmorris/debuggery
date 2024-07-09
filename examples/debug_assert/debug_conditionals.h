@@ -28,7 +28,7 @@
 // DEBUG defines 
 // This is the key one:
 // ************************* here **************************
-// # define DEBUG_ON true // comment this out to remove debuggery altogether.
+# define DEBUG_ON true // comment this out to remove debuggery altogether.
 
 # ifdef NDEBUG  // Just in case the IDE is allowing DEBUG v RELEASE builds.
 #  undef DEBUG_ON

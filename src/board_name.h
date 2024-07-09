@@ -97,11 +97,15 @@
 #   elif defined(ARDUINO_ARC32_TOOLS)
 #    define BOARD_NAME F("Arduino AVR 101")
 
-// Sparkfun BOARD_NAMEs (installed separately) :
+// SparkFun BOARD_NAMEs (installed separately) :
 #   elif defined(AVR_PROMICRO)
-#    define BOARD_NAME F("Sparkfun Pro Micro")
+#    define BOARD_NAME F("SparkFun Pro Micro")
+#   elif defined(ARDUINO_AVR_PROMICRO8)
+#    define BOARD_NAME F("SparkFun Pro Micro (8mhz)")
+#   elif defined(ARDUINO_AVR_PROMICRO16)
+#    define BOARD_NAME F("SparkFun Pro Micro (16mhz)")
 #   elif defined(AVR_FIOV3)
-#    define BOARD_NAME F("Sparkfun Fio v3")
+#    define BOARD_NAME F("SparkFun Fio v3")
 #   elif defined(AVR_MAKEYMAKEY)
 #    define BOARD_NAME F("SparkFun MaKey MaKey")
 #   elif defined(AVR_QDUINOMINI)
@@ -109,7 +113,7 @@
 #   elif defined(AVR_LILYPAD_ARDUINO_USB_PLUS_BOARD_NAME)
 #    define BOARD_NAME F("LilyPad USB Plus")
 
-//  My 'slacky hacky' (installed separately) Sparkfun Pro Micro modification:
+//  My 'slacky hacky' (installed separately) SparkFun Pro Micro modification:
 //  SparkFun Pro Micro USB descriptor modifications
 //  cf https://www.wronex.com/articles/220211-pro-micro-usb-name/
 // use for a Mixxx Midi Controller.

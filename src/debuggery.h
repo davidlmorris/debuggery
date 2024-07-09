@@ -47,11 +47,12 @@ class Debuggery_ : private Print
         void initialise(bool bAllowColour, unsigned long speed, uint8_t config);
         void progAnnounce(const char* progName);
         void progAnnounce(const char* progName, const char* greeting);
-
+/*
         size_t print(char* text, uint8_t colour);
         size_t println(char* text, uint8_t colour);
         size_t print(const __FlashStringHelper* text, uint8_t colour);
         size_t println(const __FlashStringHelper* text, uint8_t colour);
+*/
         // ~See Stroustrup 'The C++ Programming Language' 2nd ed r.3.3.1.3
         // for what seems like an out of place virtual.
         // note that Print::write is virtual.

@@ -145,7 +145,7 @@ void Debuggery_::_progAnnounce(const char* progName, const char* greeting)
     resetColour();
     }
 
-
+/*
 /// @brief Overloaded function to print to the serial port with colour using the F() macro.
 /// @param text text to print.
 /// @param colour colour to use (see https://en.wikipedia.org/wiki/ANSI_escape_code).
@@ -202,7 +202,7 @@ size_t Debuggery_::println(char* text, uint8_t colour)
     resetColour();
     return(result);
     }
-
+*/
 
 /// @brief Write a byte to the the serial port
 /// @param val byte to send

@@ -40,7 +40,7 @@ Once installed, copy the contents of `examples/debug_assert` to a working folder
 
 The `debug_assert.INO` is just a modified 'blink' sketch.  To Debug or not is a question we decide (are building a debug or a release build?) in the 'debug_conditionals.h' header file.  
 
-Why a separate header file, and not just in the sketch.INO?  Basically, because of the scope limitations of preprocessing in C++  it is not possible to have something defined in one C++ file and have it also show up in another '.cpp' file, even if they are in the same folder.  Now while this isn't actually true of '.ino' files since all the INO files in the Arduino project folder are concatenated together before preprocessing to act as one big INO file, it is true if you have other '.cpp' files present. 
+Why a separate header file, and not just in the sketch.INO?  Basically, because of the scope limitations of pre-processing in C++  it is not possible to have something defined in one C++ file and have it also show up in another '.cpp' file, even if they are in the same folder.  Now while this isn't actually true of '.ino' files since all the INO files in the Arduino project folder are concatenated together before pre-processing to act as one big INO file, it is true if you have other '.cpp' files present. 
 
 So if you **only** use '.ino' files you can get away with including the contents of 'debug_conditionals.h' in your main '.ino' file, if you really insisted.  However, I wouldn't recommend it - because if you ever add a '.cpp' file to your project you don't want to be taken by surprise the hard way (you know, after hours of work tracking down a non-existent bug).  If this surprises you, you are not alone.  For a while I naturally assumed that Arduino treated '.ino' files and '.cpp' file exactly the same way.  Problems with the way Arduino does its preprocessing have been discussed for a [long time now](https://github.com/arduino/Arduino/issues/1841), even if some of the fixes proposed no longer seem to work.  See [How to disable debugging for a release version](#how-to-disable-debugging-for-a-release-version) for more on this.
 
@@ -118,7 +118,7 @@ Some examples here:
 
 `DEBUG_PROGANNOUNCE("Name of prog", "some greeting or detail");` instead of `Debuggery.progAnnounce("Name of prog", "some greeting or detail");`
 
-`DEBUG_PRINT(127, HEX);` instead of `Debuggery.print(127, NEX);`
+`DEBUG_PRINT(127, HEX);` instead of `Debuggery.print(127, HEX);`
 
 `DEBUG_PRINTLN("Some text");` instead of `Debuggery.println("Some text");`
 
@@ -179,27 +179,6 @@ But more importantly... since I expect someone will want to spell colour as colo
 
     Displays the Board name and program and a greeting usually used in
     setup when establishing the app as a start up message.
-
-- ### size_t print (char \*text, uint8_t colour)
-
-    Overloaded function to print text to the serial port with colour.
-
-- ### size_t println (char \*text, uint8_t colour)
-
-    Overloaded function to print text to the serial port with colour,
-    followed by a carriage return character (ASCII 13, or \'\\r\') and a
-    newline character (ASCII 10, or \'\').
-
-- ### size_t print (const \_\_FlashStringHelper \*text, uint8_t colour)
-
-    Overloaded function to print to the serial port with colour using
-    the F() macro.
-
-- ### size_t println (const \_\_FlashStringHelper \*text, uint8_t colour)
-
-    Overloaded function to print to the serial port with colour using
-    the F() Macro, followed by a carriage return character (ASCII 13, or
-    \'\\r\') and a newline character (ASCII 10, or \'\').
 
 - ### "+ all the print and println functions from the Arduino Serial interface"
 

@@ -41,11 +41,14 @@ void setup()
     DEBUG_PROGANNOUNCE("Blink Sketch", __FILE__ " Built: " __DATE__ " " __TIME__);
     // For this next bit - see some clues in <debuggery.h>
 #if defined(ARDUINO_AVR_NANO)
-    DEBUG_PRINTLN(F("Something to say about the Nano here."), 92);
+    DEBUG_SETCOLOUR(92);
+    DEBUG_PRINTLN(F("Something to say about the Nano here."));
 #else    
-    DEBUG_PRINTLN(F("WARNING: Not using a Nano! Something to say about not using a Nano here."), 93);
+    DEBUG_SETCOLOUR(93);
+    DEBUG_PRINTLN(F("WARNING: Not using a Nano! Something to say about not using a Nano here."));
 #endif    
-    DEBUG_PRINTLN(F("DEBUG_ON is defined."), 92);
+    DEBUG_SETCOLOUR(92);
+    DEBUG_PRINTLN(F("DEBUG_ON is defined."));
     DEBUG_RESETCOLOUR();
     DEBUG_PRINTLN(F("Now some ordinary coloured text."));
     DEBUG_SETCOLOUR(92);
