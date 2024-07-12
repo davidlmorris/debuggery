@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 1.1.1
  - Added void speedTest(const uint8_t reportEvery) which when inserted (once only) in a loop as the last item, will report the number of loops per second displaying every 'reportEvery' number of seconds.
- - Added a 'upper case' version of DEBUG_ASSERT to make it obvious that this is a macro and part of Debuggery.
+ - Added an 'upper case' version of DEBUG_ASSERT to make it obvious that this is a macro and part of Debuggery.
 
 
 ## 1.1.0
