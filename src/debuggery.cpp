@@ -145,6 +145,38 @@ void Debuggery_::_progAnnounce(const char* progName, const char* greeting)
     resetColour();
     }
 
+/// @brief When inserted (once only) in a loop as the last item, will report 
+/// the number of loops per second displaying every 'reportEvery' number of seconds.
+/// @param reportEvery const uint8_t Frequency of a 'report display' in seconds.
+void Debuggery_::speedTest(const uint8_t reportEvery)
+    {
+    static unsigned long timeReport = 0;
+    static unsigned long loopCount = 0;
+    static unsigned long loopReportCount = 0;
+    static unsigned long loopTime = 0;
+
+    unsigned long nowTime = millis();
+    loopCount++; // since we have just completed one loop, since we are the last item in that loop.
+    if ((loopTime + 1000) < nowTime)
+        {
+        loopTime = nowTime;
+        loopReportCount = loopReportCount + loopCount;
+        if ((timeReport + (reportEvery * 1000)) < nowTime)
+            {
+            loopReportCount = loopReportCount / reportEvery;
+            print(F("Loop counts per second: "));
+            print(loopReportCount);
+            print(F(" (reported every "));
+            print(reportEvery);
+            println(F(" secs)."));
+            loopReportCount = 0;
+            timeReport = nowTime;
+            }
+        loopCount = 0;
+        }
+    }
+
+
 /*
 /// @brief Overloaded function to print to the serial port with colour using the F() macro.
 /// @param text text to print.

@@ -10,6 +10,7 @@
 
 #  define assert(e) ((e) ? (void)0 : Debuggery.__assert(__func__, __FILE__, __LINE__, #e))
 #  define debug_assert(e) ((e) ? (void)0 : Debuggery.__assert(__func__, __FILE__, __LINE__, #e))
+#  define DEBUG_ASSERT(e) ((e) ? (void)0 : Debuggery.__assert(__func__, __FILE__, __LINE__, #e))
 
 #  define setColor(...)  setColour(__VA_ARGS__);
 
@@ -28,6 +29,7 @@
 // We are a bit lucky that we have only one and that it is not polymorphic.
 # define DEBUG_RESETCOLOUR()  Debuggery.resetColour()
 # define DEBUG_RESETCOLOR()  Debuggery.resetColour()
+# define DEBUG_SPEEDTEST(y)  Debuggery.speedTest(y)
 # define DEBUG_DEBUGGERY  Debuggery
 
 
@@ -47,6 +49,7 @@ class Debuggery_ : private Print
         void initialise(bool bAllowColour, unsigned long speed, uint8_t config);
         void progAnnounce(const char* progName);
         void progAnnounce(const char* progName, const char* greeting);
+        void speedTest(const uint8_t reportEvery);
 /*
         size_t print(char* text, uint8_t colour);
         size_t println(char* text, uint8_t colour);

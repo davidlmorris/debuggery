@@ -7,6 +7,7 @@
 // especially if another libary has used #include <assert>.
 // so another option could help to remind us... (in other words USE THIS:)
 #  define debug_assert(e) ((void)0)
+#  define DEBUG_ASSERT(e) ((void)0)
 
 # define DEBUG_INITIALISE(...) ((void)0)
 # define DEBUG_PROGANNOUNCE(...)  ((void)0)
@@ -17,6 +18,7 @@
 # define DEBUG_SETCOLOR(...)  ((void)0)
 # define DEBUG_RESETCOLOUR()  ((void)0)
 # define DEBUG_RESETCOLOR()  ((void)0)
+# define DEBUG_SPEEDTEST(y) ((void)0)
 # define DEBUG_DEBUGGERY  (true)
 
 #endif

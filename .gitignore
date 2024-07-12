@@ -54,13 +54,13 @@ components/
 /.vscode_ESP32_DEV
 /.vscode_doitESP32devkitV1
 
-#examples
-/examples/avoid_overhead
+#assets
+/assets/class_debuggery__.png
 
 #temporary
 library.json
 
 #examples
-/assets/class_debuggery__.png
-
+/examples/avoid_overhead
+/examples/current
 

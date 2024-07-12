@@ -150,7 +150,7 @@ The exception is the boolean 'Overloaded operator' call to Debuggery, which will
 
 I can't.  As I discovered when I found how to get spell check for Readme.md files.
 
-But more importantly... since I expect someone will want to spell colour as color, there are macros that will do with automagically, so using `Debuggery.setColor(91)` is the same as using `Debuggery.setColour(91)`, and `DEBUG_SETCOLOR(91)` is the same as using `DEBUG_SETCOLOUR(91)`.
+But more importantly... since I expect someone will want to spell colour as color, there are macros that will do with auto-magically, so using `Debuggery.setColor(91)` is the same as using `Debuggery.setColour(91)`, and `DEBUG_SETCOLOR(91)` is the same as using `DEBUG_SETCOLOUR(91)`.
 
 ## Debuggery Public Members
 
@@ -172,13 +172,15 @@ But more importantly... since I expect someone will want to spell colour as colo
 
 - ### void progAnnounce (char \*programmeName)
 
-    Displays the Board name and program as a hello message usually used
-    in setup when establishing the app as a start up message.
+    Displays the Board name and program as a hello message usually used in setup when establishing the app as a start up message.
 
 - ### void progAnnounce (char \*programmeName, char \*greeting)
 
-    Displays the Board name and program and a greeting usually used in
-    setup when establishing the app as a start up message.
+    Displays the Board name and program and a greeting usually used in setup when establishing the app as a start up message.
+
+- ### void speedTest(const uint8_t reportEvery)
+
+    When inserted (once only) in a loop as the last item, 'speedTest' will report the number of loops per second displaying every 'reportEvery' number of seconds.
 
 - ### "+ all the print and println functions from the Arduino Serial interface"
 
@@ -202,7 +204,7 @@ But more importantly... since I expect someone will want to spell colour as colo
 
 - ### void \_\_assert (const char \*func, const char \*file, int line, const char \*failedexpr)
 
-    Used in conjuction with the debug_assert macro.
+    Used in conjunction with the debug_assert macro.
 
 ## Coding Style
 

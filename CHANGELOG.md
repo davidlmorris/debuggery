@@ -9,6 +9,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.1.1
+ - Added void speedTest(const uint8_t reportEvery) which when inserted (once only) in a loop as the last item, will report the number of loops per second displaying every 'reportEvery' number of seconds.
+ - Added a 'upper case' version of DEBUG_ASSERT to make it obvious that this is a macro and part of Debuggery.
+
+
 ## 1.1.0
  - Added ARDUINO_AVR_PROMICRO16 to "board_name.h" (used in platformio).
  - removed the following functions as redundant, and for expressing two ideas in one call.  Use a print or println, with a setcolour before the call.
