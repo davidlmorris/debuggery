@@ -5,7 +5,7 @@
 
 `"What sort of debuggery is this...?"` ~  *someone in Dr Dobbs Journal many decades ago.*
 
-Debuggery is not Debug or Debugging!  Meaning, this is not 'real' debugging using jtag (or any thing else super duper fancy with the ability to stop code, check registers amd variables and resume).
+Debuggery is not Debug or Debugging!  Meaning, this is not 'real' debugging using jtag (or any thing else super duper fancy with the ability to stop code, check registers amd variables and resume). What it is, is a set of C++ low impact print utilities (with colour), along with a macro implementation that allows you to have asserts and debug prints that can be defined out for a final release version, without necessarily having to  wrap code in '#if' and '#endif' preprocessor statements.
 
 ## Contents
 
@@ -24,11 +24,11 @@ Debuggery is not Debug or Debugging!  Meaning, this is not 'real' debugging usin
 
 ## How it works
 
-Unlike some other debug utilities library this will print floating point numbers (as per the Serial library).  It extends the Print amd Printable classes, also  used by Serial, LiquidCrystal, Ethernet and WifI, and so prints in exactly the same way with out adding much overhead to your code (about 1k).  
+It extends the Print amd Printable classes, also used by Arduino Serial, LiquidCrystal, Ethernet and WifI, and so prints in exactly the same way with out adding much overhead to your code (about 1k). Implemented correctly, a 'release version' of your code (debug statements defined out) should have zero extra bytes of both program and volatile memory from this utility.  Unlike some other debug utilities library this will print floating point numbers (in the same way as the Arduino Serial library).  In addition Debuggery includes a speed test (showing loops per second), and a program announce that also shows the selected MCU or board being used.
 
 ## Why?
 
-So why? I had collected various bits and pieces that I was using as a irregular and sometimes random scaffolding code, some of which I thought might be more generally useful. Sometimes I even forgot about things I had, or had learnt before. Putting it together in a Library made the most sense. And when actually putting this together, I discovered even more (like Variadic Macros). Since the boiler plate was mostly used for Serial Out at the start of a project only when I was debugging (yes I know...) - tying it together with Debugging macros seemed like the best idea.  
+So why? I had collected various bits and pieces that I was using as a irregular and sometimes random scaffolding code, but generally in every project while I was developing it, some of which I thought might be useful to others. Sometimes I even forgot about things I had, or had learnt before. Putting it together in a Library made the most sense. And when actually putting this together, I discovered even more (like Variadic Macros). Since the boiler plate was mostly used for Serial Out at the start of a project only when I was debugging (yes I know...) - tying it together with Debugging macros seemed like the best idea.  
 
 Note, that in `debuggery.h` you get way of identifying the type of MCU or board being used, see ['src\board_name.h'](https://github.com/davidlmorris/Debuggery/blob/main/src/board_name.h).  
 

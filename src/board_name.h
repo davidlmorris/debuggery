@@ -30,19 +30,20 @@
 #    error "Unknown TEENSYDUINO BOARD_NAME"
 #   endif
 #  elif defined(ESP_PLATFORM)
-#   if defined(ESP8266)
+#   if defined(ESP8266) // Don't have one to test - a guess that probably works
 #    define BOARD_NAME F("ESP8266")
 #   elif defined(ESP32)
 #    if defined(ARDUINO_VARIANT)
-#     define BOARD_NAME F("Esp32 " ARDUINO_VARIANT)
+#     define BOARD_NAME F("Esp32 " ARDUINO_VARIANT) // Will likely hold the actual board name.
 #    elif defined(ARDUINO_BOARD)
-#     define BOARD_NAME F("Esp32 (unknown variant)")
+#     define BOARD_NAME F("Esp32 " ARDUINO_BOARD)
 #    else
 #     define BOARD_NAME F("Esp32 (unknown board)")
 #    endif
 #   elif defined(ESP32S3)
 #    define BOARD_NAME F("Esp32 S3")
 #   else
+// Need to fill in some gaps here.
 #    error "Unknown ESP_PLATFORM BOARD_NAME"
 #   endif
 #  else // --------------- Arduino and others ------------------
