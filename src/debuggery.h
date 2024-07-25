@@ -19,7 +19,7 @@
 // C++11 onwards only of course... wow I could have used this 20 years ago!
 # define DEBUG_INITIALISE(...) Debuggery.initialise(__VA_ARGS__)
 # define DEBUG_PROGANNOUNCE(...)  Debuggery.progAnnounce(__VA_ARGS__)
-# define DEBUG_WRITE(...)  Debuggery.write_and_read(__VA_ARGS__)
+# define DEBUG_WRITE(...)  Debuggery.write(__VA_ARGS__)
 # define DEBUG_PRINT(...)  Debuggery.print(__VA_ARGS__)
 # define DEBUG_PRINTLN(...)  Debuggery.println(__VA_ARGS__)
 # define DEBUG_SETCOLOUR(...)  Debuggery.setColour(__VA_ARGS__)
@@ -50,12 +50,7 @@ class Debuggery_ : private Print
         void progAnnounce(const char* progName);
         void progAnnounce(const char* progName, const char* greeting);
         void speedTest(const uint8_t reportEvery);
-/*
-        size_t print(char* text, uint8_t colour);
-        size_t println(char* text, uint8_t colour);
-        size_t print(const __FlashStringHelper* text, uint8_t colour);
-        size_t println(const __FlashStringHelper* text, uint8_t colour);
-*/
+
         // ~See Stroustrup 'The C++ Programming Language' 2nd ed r.3.3.1.3
         // for what seems like an out of place virtual.
         // note that Print::write is virtual.

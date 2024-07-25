@@ -9,6 +9,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.1.2
+- Removed a weird macro that somehow crept in from debuggery.h.
+- Added debug_multitask example.
+
+
 ## 1.1.1
  - Added void speedTest(const uint8_t reportEvery) which when inserted (once only) in a loop as the last item, will report the number of loops per second displaying every 'reportEvery' number of seconds.
  - Added an 'upper case' version of DEBUG_ASSERT to make it obvious that this is a macro and part of Debuggery.

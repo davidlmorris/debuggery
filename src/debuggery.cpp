@@ -17,11 +17,11 @@ void Debuggery_::_init(bool bAllowColour)
 /// USe true in the VSCODE IDE.
 void Debuggery_::initialise(bool bAllowColour)
     {
-     if (Serial)
-         {
-         Serial.flush();
-         //Serial.end();
-         }
+    if (Serial)
+        {
+        Serial.flush();
+        //Serial.end();
+        }
     Serial.begin(115200);
     _init(bAllowColour);
     }
@@ -34,11 +34,11 @@ void Debuggery_::initialise(bool bAllowColour)
 /// @param speed Sets the baud rate of the serial port
 void Debuggery_::initialise(bool bAllowColour, unsigned long speed)
     {
-     if (Serial)
-         {
-         Serial.flush();
-         //Serial.end();
-         }
+    if (Serial)
+        {
+        Serial.flush();
+        //Serial.end();
+        }
     Serial.begin(speed);
     _init(bAllowColour);
     }
@@ -53,14 +53,15 @@ void Debuggery_::initialise(bool bAllowColour, unsigned long speed)
 /// at https://www.arduino.cc/reference/en/language/functions/communication/serial/begin/
 void Debuggery_::initialise(bool bAllowColour, unsigned long speed, uint8_t config)
     {
-     if (Serial)
-         {
-         Serial.flush();
-         //Serial.end();
-         }
+    if (Serial)
+        {
+        Serial.flush();
+        //Serial.end();
+        }
     Serial.begin(speed, config);
     _init(bAllowColour);
     }
+
 
 /// @brief Overloaded operator to test if the serial port has started.  Returns true if the specified serial port is available.
 /// noting that some boards will return true regardless.  See https://www.arduino.cc/reference/en/language/functions/communication/serial/ifserial/
@@ -94,9 +95,9 @@ void Debuggery_::__assert(const char* func, const char* file, int line, const ch
     println(F(""));
     flush(); // make sure it is all printed before we stop
     delay(100); // and some space just in case.
-    #ifdef ESP32 // esp32 keeps restarting on abort
+#ifdef ESP32 // esp32 keeps restarting on abort
     while (true);
-    #endif
+#endif
     abort(); // end the program.
     }
 
@@ -177,65 +178,6 @@ void Debuggery_::speedTest(const uint8_t reportEvery)
     }
 
 
-/*
-/// @brief Overloaded function to print to the serial port with colour using the F() macro.
-/// @param text text to print.
-/// @param colour colour to use (see https://en.wikipedia.org/wiki/ANSI_escape_code).
-/// @return size_t number of bytes written.
-size_t Debuggery_::print(const __FlashStringHelper* text, uint8_t colour)
-    {
-    size_t result;
-    setColour(colour);
-    result = print(text);
-    resetColour();
-    return(result);
-    }
-
-
-/// @brief Overloaded function to print to the serial port with colour using the F() Macro,
-/// followed by a carriage return character (ASCII 13, or '\r') and a newline character (ASCII 10, or '\n').
-/// @param text text to print.
-/// @param colour colour to use (see https://en.wikipedia.org/wiki/ANSI_escape_code).
-/// @return size_t number of bytes written.
-size_t Debuggery_::println(const __FlashStringHelper* text, uint8_t colour)
-    {
-    size_t result;
-    setColour(colour);
-    result = println(text);
-    resetColour();
-    return(result);
-    }
-
-
-/// @brief Overloaded function to print text to the serial port with colour.
-/// @param text text to print.
-/// @param colour colour to use (see https://en.wikipedia.org/wiki/ANSI_escape_code).
-/// @return size_t number of bytes written.
-size_t Debuggery_::print(char* text, uint8_t colour)
-    {
-    size_t result;
-    setColour(colour);
-    result = print(text);
-    resetColour();
-    return(result);
-    }
-
-
-/// @brief Overloaded function to print text to the serial port with colour,
-/// followed by a carriage return character (ASCII 13, or '\r') and a newline character (ASCII 10, or '\n').
-/// @param text text to print.
-/// @param colour colour to use (see https://en.wikipedia.org/wiki/ANSI_escape_code).
-/// @return size_t number of bytes written.
-size_t Debuggery_::println(char* text, uint8_t colour)
-    {
-    size_t result;
-    setColour(colour);
-    result = Serial.println(text);
-    resetColour();
-    return(result);
-    }
-*/
-
 /// @brief Write a byte to the the serial port
 /// @param val byte to send
 /// @return size_t number of bytes written.
@@ -248,6 +190,23 @@ size_t Debuggery_::write(uint8_t val)
 
 /// @brief Changes the serial monitor display colour.
 /// @param colour colour to use (see https://en.wikipedia.org/wiki/ANSI_escape_code).
+/// @note FG    Colour Name
+/// @note 30 	Black 
+/// @note 31 	Red 
+/// @note 32 	Green 
+/// @note 33 	Yellow
+/// @note 34 	Blue 
+/// @note 35 	Magenta
+/// @note 36 	Cyan 	
+/// @note 37 	White 	
+/// @note 90 	Bright Black (Gray) 	
+/// @note 91 	Bright Red 	
+/// @note 92 	Bright Green
+/// @note 93 	Bright Yellow
+/// @note 94 	Bright Blue 
+/// @note 95 	Bright Magenta
+/// @note 96 	Bright Cyan 
+/// @note 97 	Bright White     
 void Debuggery_::setColour(uint8_t colour)
     {
     if (_bAllowColour)
@@ -262,8 +221,26 @@ void Debuggery_::setColour(uint8_t colour)
         }
     }
 
+
 /// @brief Changes the serial monitor foreground and background display colour.
 ///  (see https://en.wikipedia.org/wiki/ANSI_escape_code) for the colours.
+/// @note FG  BG      Colour Name
+/// @note 30 	40 	    Black 
+/// @note 31 	41 	    Red 
+/// @note 32 	42 	    Green 
+/// @note 33 	43 	    Yellow
+/// @note 34 	44 	    Blue 
+/// @note 35 	45 	    Magenta
+/// @note 36 	46 	    Cyan 	
+/// @note 37 	47 	    White 	
+/// @note 90 	100 	Bright Black (Gray) 	
+/// @note 91 	101 	Bright Red 	
+/// @note 92 	102 	Bright Green
+/// @note 93 	103 	Bright Yellow
+/// @note 94 	104 	Bright Blue 
+/// @note 95 	105 	Bright Magenta
+/// @note 96 	106 	Bright Cyan 
+/// @note 97 	107 	Bright White     
 /// @param fgColour foreground display colour.
 /// @param bgColour background display colour.
 void Debuggery_::setColour(uint8_t fgColour, uint8_t bgColour)
@@ -301,4 +278,3 @@ void Debuggery_::resetColour(void)
 /// @brief Object to provided Debug information printing in exactly the same
 /// was at the serial port (with the same print functions).
 Debuggery_ Debuggery;
-
