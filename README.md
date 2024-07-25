@@ -20,7 +20,7 @@ Debuggery is not Debug or Debugging!  Meaning, this is not 'real' debugging usin
 - [Assert](#assert)
 - [Macros instead](#macros-instead)
 - [Spelling](#spelling)
-- [Debuggery Public Mmebers](#debuggery-public-members)
+- [Debuggery Public Members](#debuggery-public-members)
 - [Coding Style](#coding-style)
 - [Language](#language)
 
@@ -32,7 +32,7 @@ It extends the Print amd Printable classes, also used by Arduino Serial, LiquidC
 
 So why? I had collected various bits and pieces that I was using as a irregular and sometimes random scaffolding code, but generally in every project while I was developing it, some of which I thought might be useful to others. Sometimes I even forgot about things I had, or had learnt before. Putting it together in a Library made the most sense. And when actually putting this together, I discovered even more (like Variadic Macros). Since the boiler plate was mostly used for Serial Out at the start of a project only when I was debugging (yes I know...) - tying it together with Debugging macros seemed like the best idea.  
 
-Note, that in `debuggery.h` you get way of identifying the type of MCU or board being used, see ['src\board_name.h'](https://github.com/davidlmorris/Debuggery/blob/main/src/board_name.h).  
+Note, that in `debuggery.h` you get way of identifying the type of MCU or board being used, see ['src\board_name.h'](https://github.com/davidlmorris/Debuggery/blob/main/src/board_name.h) inspired by [this answer on Arduino Stack Exchange](https://arduino.stackexchange.com/a/21257/100121) by @Elmue.  While it looks like it might take a lot of memory, in reality only one entry for "BOARD_NAME" is created and used taking a handful of bytes.
 
 ## How to use it
 
@@ -44,7 +44,7 @@ The `debug_assert.INO` is just a modified 'blink' sketch.  To Debug or not is a 
 
 Why a separate header file, and not just in the sketch.INO?  Basically, because of the scope limitations of pre-processing in C++  it is not possible to have something defined in one C++ file and have it also show up in another '.cpp' file, even if they are in the same folder.  Now while this isn't actually true of '.ino' files since all the INO files in the Arduino project folder are concatenated together before pre-processing to act as one big INO file, it is true if you have other '.cpp' files present. 
 
-So if you **only** use '.ino' files you can get away with including the contents of 'debug_conditionals.h' in your main '.ino' file, if you really insisted.  However, I wouldn't recommend it - because if you ever add a '.cpp' file to your project you don't want to be taken by surprise the hard way (you know, after hours of work tracking down a non-existent bug).  If this surprises you, you are not alone.  For a while I naturally assumed that Arduino treated '.ino' files and '.cpp' file exactly the same way.  Problems with the way Arduino does its preprocessing have been discussed for a [long time now](https://github.com/arduino/Arduino/issues/1841), even if some of the fixes proposed no longer seem to work.  See [How to disable debugging for a release version](#how-to-disable-debugging-for-a-release-version) for more on this.
+So if you **only** use '.ino' files you can get away with including the contents of 'debug_conditionals.h' in your main '.ino' file, if you really insisted.  However, I wouldn't recommend it - because if you ever add a '.cpp' file to your project you don't want to be taken by surprise the hard way (you know, after hours of work tracking down a non-existent bug).  If this surprises you, you are not alone.  For a while I naturally assumed that Arduino treated '.ino' files and '.cpp' file exactly the same way.  Problems with the way Arduino does its pre-processing have been discussed for a [long time now](https://github.com/arduino/Arduino/issues/1841), even if some of the fixes proposed no longer seem to work.  See [How to disable debugging for a release version](#how-to-disable-debugging-for-a-release-version) for more on this.
 
 For this reason you should include 'debug_conditionals.h' (or another file like it) in every file that you are going to use the assert macro or use Debuggery or the macros to print out some information from the Serial port.  
 
