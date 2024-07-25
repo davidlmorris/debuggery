@@ -1,6 +1,8 @@
 
 # Debuggery
 
+[![Arduino Lib Lint](https://github.com/davidlmorris/debuggery/actions/workflows/main.yml/badge.svg)](https://github.com/arduino/arduino-lint-action/actions?workflow=Test+Action)
+
 ## A helper library for getting information (including an assert and print macros) from Arduino including the Esp32 via the usual serial port
 
 `"What sort of debuggery is this...?"` ~  *someone in Dr Dobbs Journal many decades ago.*
