@@ -1,4 +1,4 @@
-name: Arduino Lint
+name: Arduino Library Lint
 
 on: [push, pull_request]
 jobs:
