@@ -1,5 +1,5 @@
 // Very heavily modified https://docs.arduino.cc/built-in-examples/basics/Blink/ !
-#include <arduino.h>
+#include <Arduino.h>
 #include "debug_conditionals.h"
 #ifdef ARDUINO_ARCH_AVR
 // Esp32 has its own modified version included in the main libs.

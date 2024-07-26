@@ -9,8 +9,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## 1.1.6
+- Changed to <Arduino.h> rather than <arduino.h> in debug_multitask 'debug_multitask.ino' example.
+
 ## 1.1.5
-- Changed to <Arduino.h> rather than <arduino.h> in debug_multitask example.
+- Changed to <Arduino.h> rather than <arduino.h> in debug_multitask 'debug_conditionals.cpp' example.
 
 ## 1.1.4
 - Removed debug_assert macros from inside print colour which could cause stack overflow failures as they were self referring.
