@@ -1,4 +1,4 @@
-#include <arduino.h>
+#include <Arduino.h>
 #ifdef ARDUINO_ARCH_AVR
 // Esp32 has its own modified version included in the main libs.
 # include <Arduino_FreeRTOS.h>
