@@ -9,11 +9,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.1.4
+- Removed debug_assert macros from inside print colour which could cause stack overflow failures as they were self referring.
+- Improved debug_multitask by adding Macros in the same style as the ones in debuggery.h
+- Minor changes to keywords and library properties.
+- Added library.json for platformIO.
+
 ## 1.1.3
 - Bumped to try and solve lib reg issues over capital letter in lib name.
+- Changed name from Debuggery to debuggery to attempt to address Arduino-lint issues.
 
 ## 1.1.2
-- Removed a weird macro that somehow crept in from debuggery.h.
+- Removed a weird macro that somehow crept in to debuggery.h.
 - Added debug_multitask example.
 
 

@@ -1,5 +1,6 @@
 #include "debuggery.h"
 
+
 /// @brief Private function for shared initialisation tasks.
 /// @param bAllowColour true to allow, false to forbid.
 void Debuggery_::_init(bool bAllowColour)
@@ -211,10 +212,6 @@ void Debuggery_::setColour(uint8_t colour)
     {
     if (_bAllowColour)
         {
-        debug_assert((colour > 30 && colour < 37)
-                     || (colour > 40 && colour < 47)
-                     || (colour > 90 && colour < 97)
-                     || (colour > 100 && colour < 107));
         print("\x1B[");
         print(colour);
         print("m");
@@ -247,14 +244,6 @@ void Debuggery_::setColour(uint8_t fgColour, uint8_t bgColour)
     {
     if (_bAllowColour)
         {
-        debug_assert((fgColour > 30 && fgColour < 37)
-                     || (fgColour > 40 && fgColour < 47)
-                     || (fgColour > 90 && fgColour < 97)
-                     || (fgColour > 100 && fgColour < 107));
-        debug_assert((bgColour > 30 && bgColour < 37)
-                     || (bgColour > 40 && bgColour < 47)
-                     || (bgColour > 90 && bgColour < 97)
-                     || (bgColour > 100 && bgColour < 107));
         print("\x1B[");
         print(fgColour);
         print(";");

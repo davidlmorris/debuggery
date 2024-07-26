@@ -35,6 +35,8 @@
 # endif
 
 # ifdef DEBUG_ON
+
+
  // Here add debug defines for specific parts of application, so they can be turned on anf off
  // with DEBUG_ON.  
 #  define DEBUG_MIDI_SERIAL_TEXT_OUT true // comment this out to remove MIDI out as TEXT.
@@ -43,7 +45,23 @@
 // of the program, and then optionally undefine it, but keep in the statements just in case.
 
 #  include <debuggery.h>
+
+extern void initSemaphore(void);
+extern bool takeSemaphore(void);
+extern void giveSemaphore(void);
+
+#  define DEBUG_INIT_SEMAPHORE              initSemaphore()
+#  define DEBUG_START_SEMAPHORE_BLOCK       if(takeSemaphore())
+#  define DEBUG_SEMAPHORE_RELEASE           giveSemaphore()
+//extern const unsigned long xTickATinyBit;
+//extern const unsigned long xTickFullSec;
+//extern SemaphoreHandle_t xMutexSemaphoreSerialPort;
+
+
 # else
 #  include <not_debuggery.h>
+#  define DEBUG_INIT_SEMAPHORE              ((void)0)
+#  define DEBUG_START_SEMAPHORE_BLOCK       ((void)0);  // note the semi-colon is require here as we have staement not an if.
+#  define DEBUG_SEMAPHORE_RELEASE           ((void)0)
 # endif
 #endif

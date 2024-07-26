@@ -11,7 +11,6 @@
 
 void setup()
     {
-     
 #ifdef DEBUG_ON
     Debuggery.initialise(true); // allowing colour 
 # if ESP32

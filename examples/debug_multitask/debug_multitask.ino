@@ -1,10 +1,8 @@
 // Very heavily modified https://docs.arduino.cc/built-in-examples/basics/Blink/ !
-
+#include <arduino.h>
 #include "debug_conditionals.h"
 #ifdef ARDUINO_ARCH_AVR
 // Esp32 has its own modified version included in the main libs.
-// (Which you are probably using since FreeRTOS on an nano et al is 
-// likely to run into memory issues on any sizable project)
 # include <Arduino_FreeRTOS.h>
 # include <semphr.h>
 #endif
@@ -16,6 +14,30 @@ you download the FreeRTOS library and install (easiest and best using the Arduin
 Here we need to surround the DEBUG_PRINT statements with a semaphore to stop both trying to access
 the serial port at the same time to avoid confusion and potential catastrophe.
 
+We create those semaphore functions in a separate file (the new 'debug_conditionals.cpp') and add there
+declarations to the 'debug_conditionals.h' file so they can be used every where that we include this 
+through the app.  And, in that file we create MACRO's like the DEBUG_xxxx macros we have
+in Debuggery, so we can enclose blocks of DEBUG_xxx statements with semaphore macros in the same style.
+
+So we will need:
+    DEBUG_INIT_SEMAPHORE;
+in startup to set up the semaphore, and where we have a DEBUG_xxx macro, we will need to 
+surround it with the semaphore block start (and end) so that it looks like this:
+    DEBUG_START_SEMAPHORE_BLOCK
+        {
+        ...
+        DEBUG_xxx;
+        ...
+        DEBUG_SEMAPHORE_RELEASE;
+        }
+
+Note there is no semicolon after DEBUG_START_SEMAPHORE_BLOCK as that is emulating an if statement.
+
+The advantage of these macros it that if we DON'T define DEBUG_ON, then we are taking up 
+zero code overhead in our release version.  It also has the advantage of making it clear when we 
+are just printing debug statements, or actually using real code that we want to keep in the 
+release application.
+
 We create two tasks that run in the background after being started in setup). Nothing
 happens in loop().  If we were to add code to loop() we would still need to use the semaphore to
 avoid contention with the task if we print to the serial port.
@@ -23,7 +45,7 @@ avoid contention with the task if we print to the serial port.
 The first task (TaskBlink) will blink the Led as usual in a link sketch turning it on and off 
 twice a second, and at the same time printing * in yellow when on and _ in read when off.
 
-The second task (imaginatively named TaskSecond) prints the number of seconds since the task 
+The second task (TaskSecond - apologies for the pun) prints the number of seconds since the task 
 started every 5 seconds.
 
 The output (when DEBUG_ON is set) should look something like:
@@ -52,34 +74,6 @@ Note that in this simple example we have used portMAX_DELAY.  In reality you wou
 #endif
 
 
-const unsigned long xTickATinyBit = (50 / portTICK_PERIOD_MS);
-const unsigned long xTickFullSec = (1000 / portTICK_PERIOD_MS);
-
-SemaphoreHandle_t xMutexSemaphoreSerialPort = NULL;
-
-void initSemaphore(void)
-    {
-    xMutexSemaphoreSerialPort = xSemaphoreCreateMutex();
-    }
-
-bool takeSemaphore(void)
-    {
-    if (xSemaphoreTake(xMutexSemaphoreSerialPort, (TickType_t) portMAX_DELAY ) == pdTRUE)
-        {
-        return (true);
-        }
-    else
-        {
-        return (false);
-        }
-    }
-
-void giveSemaphore(void)
-    {
-    vTaskDelay(xTickATinyBit);
-    xSemaphoreGive(xMutexSemaphoreSerialPort);
-    }
-
 void TaskSecond(void* pvParameters);
 void TaskBlink(void* pvParameters);
 
@@ -93,7 +87,7 @@ void setup()
 # if ESP32
     delay(5000); // because there is no hold while the serial port initialises
 # else    
-    initSemaphore();
+    DEBUG_INIT_SEMAPHORE;
     while (!DEBUG_DEBUGGERY)
         {
         }; // Hold until the serial port is ready.
@@ -146,20 +140,24 @@ void TaskBlink(void* pvParameters)
     while (true) // just keep going
         {
         digitalWrite(LED_BUILTIN, HIGH);
-        if (takeSemaphore())
+
+        DEBUG_START_SEMAPHORE_BLOCK
             {
             DEBUG_SETCOLOR(93);
             DEBUG_PRINT("*");
-            giveSemaphore();
+            DEBUG_SEMAPHORE_RELEASE;
             }
+
         vTaskDelay(250 / portTICK_PERIOD_MS); // wait a quarter of z sec = 250ms.
         digitalWrite(LED_BUILTIN, LOW);
-        if (takeSemaphore())
-            {
-            DEBUG_SETCOLOR(31);
-            DEBUG_PRINT("_");
-            giveSemaphore();
-            }
+
+         DEBUG_START_SEMAPHORE_BLOCK
+             {
+             DEBUG_SETCOLOR(31);
+             DEBUG_PRINT("_");
+             DEBUG_SEMAPHORE_RELEASE;
+             }
+
         vTaskDelay(250 / portTICK_PERIOD_MS);
         }
     }
@@ -169,14 +167,15 @@ void TaskSecond(void* pvParameters)
     vTaskDelay(500 / portTICK_PERIOD_MS); // wait a half a sec so we start after we said, and not before!
     while (true) // just keep going
         {
-        if (takeSemaphore())
+        DEBUG_START_SEMAPHORE_BLOCK
             {
             DEBUG_RESETCOLOR();
             DEBUG_PRINT(" ");
             DEBUG_PRINT(millis() / 1000);
             DEBUG_PRINT(" ");
-            giveSemaphore();
+            DEBUG_SEMAPHORE_RELEASE;
             }
+           
         vTaskDelay(5000 / portTICK_PERIOD_MS); // wait a sec
         }
     }
