@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 1.1.7
 - fixed conversion from 'SerialConfig' to 'uint8_t' (which should have been uint32_t).
-- Commented out define assert(e), as far to likely to conflict with exiting 'asserts' especially for the Esp32.
+- Commented out define assert(e), as far too likely to conflict with existing 'asserts', especially for the Esp32.
 
 
 ## 1.1.6
