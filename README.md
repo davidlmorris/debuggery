@@ -40,7 +40,7 @@ Install the library code in the normal way.  Currently that means using the 'add
 
 Once installed, copy the contents of `examples/debug_assert` to a working folder to create as a sketch.  (Do NOT use the arduino 'include library' method from the sketch menu as that will add all the header files to your sketch INO file, when all we want is to include the 'debug_conditionals.h' header file that we will have copied or created in the local sketch folder.)  
 
-The `debug_assert.INO` is just a modified 'blink' sketch.  To Debug or not is a question we decide (are building a debug or a release build?) in the 'debug_conditionals.h' header file.  
+The `debug_assert.ino` is just a modified 'blink' sketch.  To Debug or not is a question we decide (are building a debug or a release build?) in the 'debug_conditionals.h' header file.  
 
 Why a separate header file, and not just in the sketch.INO?  Basically, because of the scope limitations of pre-processing in C++  it is not possible to have something defined in one C++ file and have it also show up in another '.cpp' file, even if they are in the same folder.  Now while this isn't actually true of '.ino' files since all the INO files in the Arduino project folder are concatenated together before pre-processing to act as one big INO file, it is true if you have other '.cpp' files present. 
 
@@ -62,7 +62,7 @@ Why `DEBUG_ON` and not `DEBUG`?  It is to avoid potential collisions with an IDE
 
 Surround every Debuggery use (or group, or even a whole function) with `#if DEBUG_ON ... #endif`, so that when DEBUG_ON is not defined  (of is define to be false) the code runs without any issues, OR use the [Macros instead](#macros-instead) as shown below.
 
-If you are convinced that using DEBUG (or even NDEBUG) will not result in any present or future collisions or issues, go ahead an use it. You'll probably want [assert()](#assert) as well (again not recommended).  I'm just playing it safe here.
+If you are convinced that using DEBUG (or even NDEBUG) will not result in any present or future collisions or issues, go ahead an use it. You'll probably want [assert()](#assert) as well (again not recommended).  I'm just playing it safe here.  (Note that as of v1.1.7 'assert()' has been commented out, so you will need to un-comment that in debuggery.h and not_debuggery.h, while debug_assert remain unaffected.)
 
 ## Initialisation
 
@@ -106,7 +106,7 @@ So our example code 'debug_macros.ino' when asserting the evidently false assert
 
 ```Assertion failed: (true == false), function:loop, file:C:\Home\Github\Debuggery\examples\debug_assert\debug_assert.ino, line:32.```
 
-There is an `assert()` macro also defined in exactly the same way, however I would recommend against using this just in case your environment (perhaps later) supports the `assert()`, and it becomes unclear which one is being used.  If DEBUG_ON is undefined in 'debug_conditionals.h', (just comment it out) this macro wil be removed from the code when complied (though it is still present in the source code), and the loop will continue as expected.
+If DEBUG_ON is undefined in 'debug_conditionals.h', (just comment it out) this macro wil be removed from the code when complied (though it is still present in the source code), and the loop will continue as expected.
 
 ## Macros instead
 

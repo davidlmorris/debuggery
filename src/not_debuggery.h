@@ -2,7 +2,9 @@
 # define not_debuggery_h
 // we need to have there here if we use 'debug_assert' regardless of if
 // we are using Debuggery or not.
-#  define assert(e) ((void)0)
+
+// #  define assert(e) ((void)0)
+
 // if we don't include this file things could get horribly messed up if we use assert.
 // especially if another libary has used #include <assert>.
 // so another option could help to remind us... (in other words USE THIS:)

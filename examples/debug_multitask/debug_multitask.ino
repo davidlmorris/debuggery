@@ -11,6 +11,11 @@
 This example shows how to use the DEBUG macros in a multitasking environment with FreeRTOS.  Make sure 
 you download the FreeRTOS library and install (easiest and best using the Arduino IDE.)
 
+This example also assumes that you are not using the Serial port for any other purpose than debugging. 
+If you are, then you will beed to change some of the define blocks around the semaphore
+code in 
+
+
 Here we need to surround the DEBUG_PRINT statements with a semaphore to stop both trying to access
 the serial port at the same time to avoid confusion and potential catastrophe.
 

@@ -8,7 +8,7 @@
 // "What sort of debuggery is this...?"
 //          ~ someone in 'Dr Dobbs Journal' decades ago.
 
-#  define assert(e) ((e) ? (void)0 : Debuggery.__assert(__func__, __FILE__, __LINE__, #e))
+// #  define assert(e) ((e) ? (void)0 : Debuggery.__assert(__func__, __FILE__, __LINE__, #e))
 #  define debug_assert(e) ((e) ? (void)0 : Debuggery.__assert(__func__, __FILE__, __LINE__, #e))
 #  define DEBUG_ASSERT(e) ((e) ? (void)0 : Debuggery.__assert(__func__, __FILE__, __LINE__, #e))
 
@@ -46,7 +46,7 @@ class Debuggery_ : private Print
         operator bool();
         void initialise(bool bAllowColour);
         void initialise(bool bAllowColour, unsigned long speed);
-        void initialise(bool bAllowColour, unsigned long speed, uint8_t config);
+        void initialise(bool bAllowColour, unsigned long speed, uint32_t config);
         void progAnnounce(const char* progName);
         void progAnnounce(const char* progName, const char* greeting);
         void speedTest(const uint8_t reportEvery);

@@ -52,7 +52,7 @@ void Debuggery_::initialise(bool bAllowColour, unsigned long speed)
 /// @param speed Bits per second (baud).
 /// @param config Sets data, parity, and stop bits. Valid values are listed
 /// at https://www.arduino.cc/reference/en/language/functions/communication/serial/begin/
-void Debuggery_::initialise(bool bAllowColour, unsigned long speed, uint8_t config)
+void Debuggery_::initialise(bool bAllowColour, unsigned long speed, uint32_t config)
     {
     if (Serial)
         {
