@@ -9,6 +9,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.1.8
+- fixing version information in library.properties and library.json.
+
 ## 1.1.7
 - fixed conversion from 'SerialConfig' to 'uint8_t' (which should have been uint32_t).
 - Commented out define assert(e), as far too likely to conflict with existing 'asserts', especially for the Esp32.
