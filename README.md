@@ -7,7 +7,7 @@
 
 `"What sort of debuggery is this...?"` ~  *someone in Dr Dobbs Journal many decades ago.*
 
-Debuggery is not Debug or Debugging!  Meaning, this is not 'real' debugging using jtag (or any thing else super duper fancy with the ability to stop code, check registers amd variables and resume). What it is, is a set of C++ low impact print utilities (with colour), along with a macro implementation that allows you to have asserts and debug prints that can be defined out for a final release version, without necessarily having to  wrap code in '#if' and '#endif' preprocessor statements.
+Debuggery is not Debug or Debugging!  Meaning, this is not 'real' debugging using jtag (or any thing else super duper fancy with the ability to stop code, check registers amd variables and resume). What it is, is a set of C++ low impact print utilities (with colour), along with a macro implementation that allows you to have asserts and debug prints that can be defined out for a final release version, without necessarily having to  wrap code in '#if' and '#endif' preprocessor statements. And, when you do not define DEBUG_ON takes up no EPROM or RAM at all.
 
 ## Contents
 
