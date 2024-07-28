@@ -60,6 +60,9 @@ components/
 #temporary
 #library.json
 
+#private
+private_notes.txt
+
 #examples
 /examples/avoid_overhead
 /examples/current
