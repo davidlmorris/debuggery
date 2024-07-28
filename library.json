@@ -1,7 +1,13 @@
 {
     "name": "debuggery",
+    "version": "1.1.7",
     "description": "A helper library for getting information (including an assert, and print macro) from Arduino including the Esp32 via the usual serial port.",
     "keywords": "debug,assert,macro,arduino,Esp32,serial,color serial print,board names",
+    "homepage": "https://github.com/davidlmorris/debuggery",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/davidlmorris/debuggery"
+    },
     "authors": [
         {
             "name": "David Morris",
@@ -9,20 +15,13 @@
             "maintainer": true
         }
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/davidlmorris/debuggery"
-    },
-    "version": "1.1.7",
     "license": "MIT",
-    "homepage": "https://github.com/davidlmorris/debuggery",
     "frameworks": "arduino",
-    "platforms": "atmelavr, atmelsam, teensy, espressif8266, espressif32",
-    "headers": "debuggery.h",
+    "platforms": "*",
+    "headers": ["debuggery.h", "not_debuggery.h"],
     "export": {
         "exclude": [
-            "docs",
-            "extras"
+            "docs"
         ]
     },
     "build": {
