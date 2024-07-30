@@ -1,7 +1,6 @@
 
 # Debuggery
-
-![Arduino Library Lint](https://github.com/davidlmorris/debuggery/actions/workflows/main.yml/badge.svg)
+[![arduino-library-badge](https://www.ardu-badge.com/badge/debuggery.svg)](https://www.ardu-badge.com/debuggery) ![GitHub](https://img.shields.io/github/license/davidlmorris/debuggery) ![Arduino Library Lint](https://github.com/davidlmorris/debuggery/actions/workflows/main.yml/badge.svg)
 
 ## A helper library for getting information (including an assert and print macros) from Arduino including the Esp32 via the usual serial port
 
