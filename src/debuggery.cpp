@@ -134,9 +134,9 @@ void Debuggery_::_progAnnounce(const char* progName, const char* greeting)
         }
     else
         {
-        print(F(": '"));
+        print(F(" "));
         print(greeting);
-        println(F("'"));
+        println(F(""));
         }
     setColour(95); // bright magenta
     print(F("BOARD_NAME selected is "));
@@ -151,6 +151,16 @@ void Debuggery_::_progAnnounce(const char* progName, const char* greeting)
 /// the number of loops per second displaying every 'reportEvery' number of seconds.
 /// @param reportEvery const uint8_t Frequency of a 'report display' in seconds.
 void Debuggery_::speedTest(const uint8_t reportEvery)
+    {
+    speedTest(reportEvery, "");
+    }
+
+void Debuggery_::speedTest(const uint8_t reportEvery, const char * extraText)
+    {
+    speedTest(reportEvery, extraText, "");
+    }
+
+void Debuggery_::speedTest(const uint8_t reportEvery, const char * extraText, const char * moreExtraText)
     {
     static unsigned long timeReport = 0;
     static unsigned long loopCount = 0;
@@ -170,7 +180,10 @@ void Debuggery_::speedTest(const uint8_t reportEvery)
             print(loopReportCount);
             print(F(" (reported every "));
             print(reportEvery);
-            println(F(" secs)."));
+            print(F(" secs)"));
+            print(extraText);
+            print(moreExtraText);
+            println(F("."));
             loopReportCount = 0;
             timeReport = nowTime;
             }

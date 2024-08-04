@@ -160,28 +160,21 @@ But more importantly... since I expect someone will want to spell colour as colo
     Overloaded operator to test if the serial port has started.
 
 - ### void initialise (bool bAllowColour)
-
-    Overloaded function to initialise Debuggery.
-
 - ### void initialise (bool bAllowColour, unsigned long speed)
-
-    Overloaded function to initialise Debuggery.
-
 - ### void initialise (bool bAllowColour, unsigned long speed, uint8_t config)
 
-    Overloaded function to initialise Debuggery.
+    Overloaded functions to initialise Debuggery.
 
 - ### void progAnnounce (char \*programmeName)
-
-    Displays the Board name and program as a hello message usually used in setup when establishing the app as a start up message.
-
 - ### void progAnnounce (char \*programmeName, char \*greeting)
 
-    Displays the Board name and program and a greeting usually used in setup when establishing the app as a start up message.
+    Overloaded functions to display the Board name and program and a greeting  (or 'hello') usually used in setup when establishing the app as a start up message.
 
 - ### void speedTest(const uint8_t reportEvery)
+- ### void speedTest(const uint8_t reportEvery, char * extraText)
+- ### void speedTest(const uint8_t reportEvery, char * extraText, char * moreExtraText)
 
-    When inserted (once only) in a loop as the last item, 'speedTest' will report the number of loops per second displaying every 'reportEvery' number of seconds.
+    Overloaded functions when inserted (once only) in a loop as the last item, will report the number of loops per second displaying every 'reportEvery' number of seconds, with additional text depending on the overload.
 
 - ### "+ all the print and println functions from the Arduino Serial interface"
 

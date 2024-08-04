@@ -29,7 +29,9 @@
 // We are a bit lucky that we have only one and that it is not polymorphic.
 # define DEBUG_RESETCOLOUR()  Debuggery.resetColour()
 # define DEBUG_RESETCOLOR()  Debuggery.resetColour()
-# define DEBUG_SPEEDTEST(y)  Debuggery.speedTest(y)
+# define DEBUG_SPEEDTEST(...)  Debuggery.speedTest(__VA_ARGS__)
+//# define DEBUG_SPEEDTEST(y)  Debuggery.speedTest(y)
+//# define DEBUG_SPEEDTEST(y,z)  Debuggery.speedTest(y,z)
 # define DEBUG_DEBUGGERY  Debuggery
 
 
@@ -50,6 +52,9 @@ class Debuggery_ : private Print
         void progAnnounce(const char* progName);
         void progAnnounce(const char* progName, const char* greeting);
         void speedTest(const uint8_t reportEvery);
+        void speedTest(const uint8_t reportEvery, const char * extraText);
+        void speedTest(const uint8_t reportEvery, const char * extraText, const char * moreExtraText);
+
 
         // ~See Stroustrup 'The C++ Programming Language' 2nd ed r.3.3.1.3
         // for what seems like an out of place virtual.

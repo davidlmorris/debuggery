@@ -20,7 +20,7 @@
 # define DEBUG_SETCOLOR(...)  ((void)0)
 # define DEBUG_RESETCOLOUR()  ((void)0)
 # define DEBUG_RESETCOLOR()  ((void)0)
-# define DEBUG_SPEEDTEST(y) ((void)0)
+# define DEBUG_SPEEDTEST(...) ((void)0)
 # define DEBUG_DEBUGGERY  (true)
 
 #endif
