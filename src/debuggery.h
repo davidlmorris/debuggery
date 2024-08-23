@@ -22,7 +22,48 @@
 # define DEBUG_WRITE(...)  Debuggery.write(__VA_ARGS__)
 # define DEBUG_PRINT(...)  Debuggery.print(__VA_ARGS__)
 # define DEBUG_PRINTLN(...)  Debuggery.println(__VA_ARGS__)
+
+///Changes the serial monitor foreground and background display colour.
+///  (see https://en.wikipedia.org/wiki/ANSI_escape_code) for the colours.
+///  FG     BG      Colour Name
+///  30 	40 	    Black 
+///  31 	41 	    Red 
+///  32 	42 	    Green 
+///  33 	43 	    Yellow
+///  34 	44 	    Blue 
+///  35 	45 	    Magenta
+///  36 	46 	    Cyan 	
+///  37 	47 	    White 	
+///  90 	100 	Bright Black (Gray) 	
+///  91 	101 	Bright Red 	
+///  92 	102 	Bright Green
+///  93 	103 	Bright Yellow
+///  94 	104 	Bright Blue 
+///  95 	105 	Bright Magenta
+///  96 	106 	Bright Cyan 
+///  97 	107 	Bright White     
+/// DEBUG_SETCOLOUR(foregroundColour, backgroundColour);
 # define DEBUG_SETCOLOUR(...)  Debuggery.setColour(__VA_ARGS__)
+
+/// Changes the serial monitor display colour.
+/// colour to use (see https://en.wikipedia.org/wiki/ANSI_escape_code).
+/// FG    Colour Name
+/// 30 	Black 
+/// 31 	Red 
+/// 32 	Green 
+/// 33 	Yellow
+/// 34 	Blue 
+/// 35 	Magenta
+/// 36 	Cyan 	
+/// 37 	White 	
+/// 90 	Bright Black (Gray) 	
+/// 91 	Bright Red 	
+/// 92 	Bright Green
+/// 93 	Bright Yellow
+/// 94 	Bright Blue 
+/// 95 	Bright Magenta
+/// 96 	Bright Cyan 
+/// 97 	Bright White 
 # define DEBUG_SETCOLOR(...)  Debuggery.setColour(__VA_ARGS__)
 // However, both the C99 and C++11 standards require at least one argument, so
 // we really would prefer __VA_OPT__ from C++20 onwards.  But Arduino uses C++11.
@@ -51,14 +92,25 @@ class Debuggery_ : private Print
         void initialise(bool bAllowColour, unsigned long speed, uint32_t config);
         void progAnnounce(const char* progName);
         void progAnnounce(const char* progName, const char* greeting);
-        void speedTest(const uint8_t reportEvery);
-        void speedTest(const uint8_t reportEvery, const char * extraText);
-        void speedTest(const uint8_t reportEvery, const char * extraText, const char * moreExtraText);
+        bool speedTest(const uint8_t reportEvery);
+        bool speedTest(const uint8_t reportEvery,
+                       const char* extraText);
+        bool speedTest(const uint8_t reportEvery,
+                       const char* extraText,
+                       const char* moreExtraText);
+        bool speedTest(const uint8_t reportEvery,
+                       const char* extraText,
+                       const bool bAverage,
+                       const bool bAverageReset);
+        bool speedTest(const uint8_t reportEvery,
+                       const char* extraText,
+                       const char* moreExtraText,
+                       const bool bAverage,
+                       const bool bAverageReset);
 
-
-        // ~See Stroustrup 'The C++ Programming Language' 2nd ed r.3.3.1.3
-        // for what seems like an out of place virtual.
-        // note that Print::write is virtual.
+// ~See Stroustrup 'The C++ Programming Language' 2nd ed r.3.3.1.3
+// for what seems like an out of place virtual.
+// note that Print::write is virtual.
         virtual size_t write(uint8_t byte);
 
         void setColour(uint8_t colour);

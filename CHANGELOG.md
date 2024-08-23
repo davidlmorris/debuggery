@@ -9,6 +9,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.2.0
+- Bumped to 1.2 since there are some big jumps in speed test options.
+- Added more comments on colour to the header.
+- Added a cumulative average counter to the speed test, with the following function calls:
+`speedTest(const uint8_t reportEvery,
+                           const char* extraText,
+                           const bool bAverageReset,
+                           const bool bAverageReset)` and 
+`speedTest(const uint8_t reportEvery,
+                           const char* extraText,
+                           const char* moreExtraText,
+                           const bool bAverage,
+                           const bool bAverageReset)`.         
+- modified `speedtest(...)` to return a bool, reporting false, unless it performed a report.
+- Modified [examples/debug_speedtest](https://github.com/davidlmorris/debuggery/tree/main/examples/debug_speedtest) to account for the new variants.
+
 ## 1.1.9
 - Added ```void "speedTest(const uint8_t reportEvery, char * extraText);``` and ```void "speedTest(const uint8_t reportEvery, char * extraText, char * moreExtraText);```so extra info can be printed each time the speed is displayed.  Note these are strings only.
 - Removed the single quotes wrapping the greeting in `void progAnnounce(char *programmeName, char *greeting)`.

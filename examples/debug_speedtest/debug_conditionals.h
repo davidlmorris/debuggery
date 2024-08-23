@@ -1,3 +1,5 @@
+#ifndef _DEBUG_SPEEDTEST_DEBUG_CONDITIONALS_20COPY_H_
+#define _DEBUG_SPEEDTEST_DEBUG_CONDITIONALS_20COPY_H_
 
 
 #ifndef debug_conditionals_h
@@ -37,13 +39,25 @@
 # ifdef DEBUG_ON
  // Here add debug defines for specific parts of application, so they can be turned on anf off
  // with DEBUG_ON.  
+
+
+
 #  define DEBUG_MIDI_SERIAL_TEXT_OUT true // comment this out to remove MIDI out as TEXT.
 
 // Add any other debug conditionals here where you might want to test/debug/get_info on some part
 // of the program, and then optionally undefine it, but keep in the statements just in case.
+
+# define NUMBER_BUFFER 33
+extern  char* debugSnSeconds(const char* _Buffer,
+                             size_t const _BufferCount,
+                             const char* sMessage,
+                             uint32_t seconds_run_time);
 
 #  include <debuggery.h>
 # else
 #  include <not_debuggery.h>
 # endif
 #endif
+
+
+#endif /* _DEBUG_SPEEDTEST_DEBUG_CONDITIONALS_20COPY_H_ */

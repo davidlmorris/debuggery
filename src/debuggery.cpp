@@ -150,45 +150,115 @@ void Debuggery_::_progAnnounce(const char* progName, const char* greeting)
 /// @brief When inserted (once only) in a loop as the last item, will report 
 /// the number of loops per second displaying every 'reportEvery' number of seconds.
 /// @param reportEvery const uint8_t Frequency of a 'report display' in seconds.
-void Debuggery_::speedTest(const uint8_t reportEvery)
+/// @returns bool true, if a report was printed.
+bool Debuggery_::speedTest(const uint8_t reportEvery)
     {
-    speedTest(reportEvery, "");
+    return(speedTest(reportEvery, "", "", false, false));
     }
 
-void Debuggery_::speedTest(const uint8_t reportEvery, const char * extraText)
+bool Debuggery_::speedTest(const uint8_t reportEvery,
+                           const char* extraText)
     {
-    speedTest(reportEvery, extraText, "");
+    return(speedTest(reportEvery, extraText, "", false, false));
     }
 
-void Debuggery_::speedTest(const uint8_t reportEvery, const char * extraText, const char * moreExtraText)
+bool Debuggery_::speedTest(const uint8_t reportEvery,
+                           const char* extraText,
+                           const char* moreExtraText)
     {
-    static unsigned long timeReport = 0;
+    return(speedTest(reportEvery, extraText, moreExtraText, false, false));
+    }
+
+
+bool Debuggery_::speedTest(const uint8_t reportEvery,
+                           const char* extraText,
+                           const bool bAverage,
+                           const bool bAverageReset)
+    {
+    return(speedTest(reportEvery, extraText, "", bAverage, bAverageReset));
+    }
+
+
+bool Debuggery_::speedTest(const uint8_t reportEvery,
+                           const char* extraText,
+                           const char* moreExtraText,
+                           const bool bAverage,
+                           const bool bAverageReset)
+    {
+    static bool bAverageSetOnce = true;
+    static bool bAverageResetOnce = false;
+    static unsigned long loopTime = millis() + 1000; // initial time
+    static unsigned long timeReport = millis() + (reportEvery * 1000); // initial report time.
     static unsigned long loopCount = 0;
-    static unsigned long loopReportCount = 0;
-    static unsigned long loopTime = 0;
-
+    static unsigned long averageCalcLoopCount = 0;
+    static unsigned long reportLoopCount = 0;
+    static float cumulativeAverage = 0.0;
+    static bool bFirstReport = true;
     unsigned long nowTime = millis();
-    loopCount++; // since we have just completed one loop, since we are the last item in that loop.
-    if ((loopTime + 1000) < nowTime)
+    bool bResult = false;
+
+    loopCount++; // We have just completed one loop as we are
+                 // (or should be) the last item in that loop.
+    if (bAverageReset)
         {
-        loopTime = nowTime;
-        loopReportCount = loopReportCount + loopCount;
-        if ((timeReport + (reportEvery * 1000)) < nowTime)
+        // Store a little note that the next time we report the average we, 
+        // we reset the average to start again.  Since this could come at any time
+        // we will need to adjust this to be at the start of the report period.
+        bAverageResetOnce = true;
+        }
+
+    // if ((loopTime + 1000) < nowTime) //Every second...
+    if (loopTime < nowTime) //Every second...
+        {
+        reportLoopCount = reportLoopCount + loopCount;
+        averageCalcLoopCount++;
+
+        // if this is the first time, or we had previously reset the average counter...
+        if (bAverageSetOnce)
             {
-            loopReportCount = loopReportCount / reportEvery;
-            print(F("Loop counts per second: "));
-            print(loopReportCount);
+            averageCalcLoopCount = 1;
+            bAverageSetOnce = false;
+            cumulativeAverage = reportLoopCount;
+            }
+        else
+            {
+            // otherwise we calculate the running average for each loopCount since we
+            // are doing this every second.
+            cumulativeAverage = cumulativeAverage
+                - ((cumulativeAverage / (float) averageCalcLoopCount))
+                + ((loopCount / (float) averageCalcLoopCount));
+            }
+        // If we have been counting for a report period (min 1 sec) then report it.
+        if (timeReport < nowTime)
+            {
+            print(F("Loops per second: "));
+            print(reportLoopCount / (float) reportEvery, 2);
+
             print(F(" (reported every "));
             print(reportEvery);
             print(F(" secs)"));
+            if (bAverage)
+                {
+                print(F(" (avg: "));
+                print(cumulativeAverage, 2);
+                print(F(" )"));
+                }
             print(extraText);
             print(moreExtraText);
             println(F("."));
-            loopReportCount = 0;
-            timeReport = nowTime;
+            reportLoopCount = 0; // Mark the start of a new report period
+            timeReport = nowTime + (reportEvery * 1000); // and reset the report period loop count.
+            bResult = true;
+            if (bAverageResetOnce)
+                {
+                bAverageSetOnce = true;
+                bAverageResetOnce = false;
+                }
             }
-        loopCount = 0;
+        loopTime = nowTime + 1000;  // Mark the start of a new second
+        loopCount = 0;       // and reset the loop count for the next second.
         }
+    return(bResult);
     }
 
 
@@ -278,5 +348,5 @@ void Debuggery_::resetColour(void)
 
 
 /// @brief Object to provided Debug information printing in exactly the same
-/// was at the serial port (with the same print functions).
+/// way as the serial port (with the same print functions).
 Debuggery_ Debuggery;

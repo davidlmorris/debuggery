@@ -12,6 +12,7 @@ indent_braces=true
 indent_brace_style=whitesmiths
 insert_final_newline = true
 indent_style = space
+trim_trailing_whitespace=true
 
 #Wrapping options
 cpp_wrap_preserve_blocks=never 
@@ -48,6 +49,7 @@ cpp_space_remove_before_semicolon=true
 cpp_space_before_comma=false
 cpp_space_after_comma=true
 cpp_space_before_function_open_parenthesis=remove
+cpp_space_after_cast_close_parenthesis=true
 
 # cpp_indent_case_contents_when_block=false
 # cpp_indent_lambda_braces_when_parameter=true

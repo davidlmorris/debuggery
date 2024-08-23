@@ -1,6 +1,6 @@
 
 # Debuggery
-[![arduino-library-badge](https://www.ardu-badge.com/badge/debuggery.svg)](https://www.ardu-badge.com/debuggery) ![GitHub](https://img.shields.io/github/license/davidlmorris/debuggery) ![Arduino Library Lint](https://github.com/davidlmorris/debuggery/actions/workflows/main.yml/badge.svg)
+[![arduino-library-badge](https://www.ardu-badge.com/badge/debuggery.svg)](https://www.ardu-badge.com/debuggery) [![PlatformIO Registry](https://badges.registry.platformio.org/packages/davidlmorris/library/debuggery.svg)](https://registry.platformio.org/libraries/davidlmorris/debuggery) ![GitHub](https://img.shields.io/github/license/davidlmorris/debuggery) ![Arduino Library Lint](https://github.com/davidlmorris/debuggery/actions/workflows/main.yml/badge.svg)
 
 ## A helper library for getting information (including an assert and print macros) from Arduino including the Esp32 via the usual serial port
 
@@ -43,7 +43,7 @@ The `debug_assert.ino` is just a modified 'blink' sketch.  To Debug or not is a 
 
 Why a separate header file, and not just in the sketch.INO?  Basically, because of the scope limitations of pre-processing in C++  it is not possible to have something defined in one C++ file and have it also show up in another '.cpp' file, even if they are in the same folder.  Now while this isn't actually true of '.ino' files since all the INO files in the Arduino project folder are concatenated together before pre-processing to act as one big INO file, it is true if you have other '.cpp' files present. 
 
-So if you **only** use '.ino' files you can get away with including the contents of 'debug_conditionals.h' in your main '.ino' file, if you really insisted.  However, I wouldn't recommend it - because if you ever add a '.cpp' file to your project you don't want to be taken by surprise the hard way (you know, after hours of work tracking down a non-existent bug).  If this surprises you, you are not alone.  For a while I naturally assumed that Arduino treated '.ino' files and '.cpp' file exactly the same way.  Problems with the way Arduino does its pre-processing have been discussed for a [long time now](https://github.com/arduino/Arduino/issues/1841), even if some of the fixes proposed no longer seem to work.  See [How to disable debugging for a release version](#how-to-disable-debugging-for-a-release-version) for more on this.
+So if you **only** use '.ino' files you can get away with including the contents of 'debug_conditionals.h' in your main '.ino' file, if you really insisted.  However, I wouldn't recommend it - because if you ever add a '.cpp' file to your project you don't want to be taken by surprise the hard way (you know, after hours of work tracking down a non-existent bug).  If this surprises you, you are not alone.  For a while I naturally assumed that Arduino treated '.ino' files and '.cpp' file exactly the same way, and couldn't understand where (and why) variable that should have been module specific were turning up as globals.  Problems with the way Arduino does its pre-processing have been discussed for a [long time now](https://github.com/arduino/Arduino/issues/1841), even if some of the fixes proposed no longer seem to work.  See [How to disable debugging for a release version](#how-to-disable-debugging-for-a-release-version) for more on this.
 
 For this reason you should include 'debug_conditionals.h' (or another file like it) in every file that you are going to use the assert macro or use Debuggery or the macros to print out some information from the Serial port.  
 
@@ -57,11 +57,11 @@ To disable debugging just comment out the DEBUG_ON define in the include 'debug_
 
 When `DEBUG_ON` is not defined you will save program storage  and dynamic memory.  With the example code it will be about 1k of program storage and over 100 bytes of dynamic memory, and your 'release' version will likely run faster too, since it won't have extra, or maybe any, print statements going out to the Serial port.  Unfortunately, if you include a reference to the header file 'debuggery.h' in an INO file even if #defined out (as in "debug_conditionals.h"), Arduino seems to find a way of including the associated cpp file. This is true of all library headers that you might add, not just Debuggery! See this answer from Nick Gammon on [StackExchange](https://arduino.stackexchange.com/a/13182/100121) for an hint about why.
 
-Why `DEBUG_ON` and not `DEBUG`?  It is to avoid potential collisions with an IDE environment that uses debug builds versus releases (now or in the future) since they will certainly use DEBUG.  This is really up to you, as DEBUG will probably work now, though I would recommend using DEBUG_ON as it is distinct.  All of the defines I use for various aspects or parts of the program I always start with DEBUG_, so I know at a glance what they are doing there.
+Why `DEBUG_ON` and not `DEBUG`?  It is to avoid potential collisions with an IDE environment that uses debug builds versus releases (now or in the future) since they will certainly use DEBUG.  This is really up to you, as DEBUG will probably work now, though I would recommend using DEBUG_ON as it is distinct.  All of the defines I use for various aspects of 'print-out' debugging for various parts of the program I always start with DEBUG_, so I know at a glance what they are doing there.  These have a home in `debug_conditionals.h` where they are define (true or false) only where DEBUG_ON is defined true.
 
-Surround every Debuggery use (or group, or even a whole function) with `#if DEBUG_ON ... #endif`, so that when DEBUG_ON is not defined  (of is define to be false) the code runs without any issues, OR use the [Macros instead](#macros-instead) as shown below.
+Surround every Debuggery use (or group, or even a whole function) with `#if DEBUG_ON ... #endif` or another DEBUG_XXX macro, so that when DEBUG_ON is not defined  (or it is defined to be false) the code runs without any issues, OR use the [Macros instead](#macros-instead) as shown below if you just have isolated print statements.
 
-If you are convinced that using DEBUG (or even NDEBUG) will not result in any present or future collisions or issues, go ahead an use it. You'll probably want [assert()](#assert) as well (again not recommended).  I'm just playing it safe here.  (Note that as of v1.1.7 'assert()' has been commented out, so you will need to un-comment that in debuggery.h and not_debuggery.h, while debug_assert remain unaffected.)
+If you are convinced that using DEBUG (or even NDEBUG) will not result in any present or future collisions or issues, go ahead and use it. You'll probably want [assert()](#assert) as well (again not recommended). (UPDATE: After going back to do more work on the Esp32, I've found that it includes variations on the assert macros, so you really really don't want to an yet another one to the mix.)  Note that as of v1.1.7 'assert()' has been commented out, so you will need to un-comment that in debuggery.h and not_debuggery.h, while debug_assert remain unaffected.
 
 ## Initialisation
 
@@ -173,6 +173,8 @@ But more importantly... since I expect someone will want to spell colour as colo
 - ### void speedTest(const uint8_t reportEvery)
 - ### void speedTest(const uint8_t reportEvery, char * extraText)
 - ### void speedTest(const uint8_t reportEvery, char * extraText, char * moreExtraText)
+- ### void speedTest(const uint8_t reportEvery, const char* extraText, const bool bAverageReset, const bool bAverageReset)
+- ### void speedTest(const uint8_t reportEvery, const char* extraText, const char* moreExtraText, const bool bAverage, const bool bAverageReset)
 
     Overloaded functions when inserted (once only) in a loop as the last item, will report the number of loops per second displaying every 'reportEvery' number of seconds, with additional text depending on the overload.
 
