@@ -193,7 +193,6 @@ bool Debuggery_::speedTest(const uint8_t reportEvery,
     static unsigned long averageCalcLoopCount = 0;
     static unsigned long reportLoopCount = 0;
     static float cumulativeAverage = 0.0;
-    static bool bFirstReport = true;
     unsigned long nowTime = millis();
     bool bResult = false;
 

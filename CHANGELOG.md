@@ -10,6 +10,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## current (prob will be 1.2.2)
+- Removed spurious 'bFirstReport' from speed test code.
+
 ## 1.2.1
 - Fix Arduino library lint issue in library.properties (only one category allowed).
 
