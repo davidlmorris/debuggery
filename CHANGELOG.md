@@ -9,9 +9,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# Current
 
-## current (prob will be 1.2.2)
+## 1.2.2
 - Removed spurious 'bFirstReport' from speed test code.
+- Added a report when the cumulative average has been reset.
 
 ## 1.2.1
 - Fix Arduino library lint issue in library.properties (only one category allowed).
@@ -19,16 +21,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 1.2.0
 - Bumped to 1.2 since there are some big jumps in speed test options.
 - Added more comments on colour to the header.
-- Added a cumulative average counter to the speed test, with the following function calls:
-`speedTest(const uint8_t reportEvery,
+- Added a cumulative average counter to the speed test, with the following function calls: 
+```
+    speedTest(const uint8_t reportEvery,
                            const char* extraText,
-                           const bool bAverageReset,
-                           const bool bAverageReset)` and 
-`speedTest(const uint8_t reportEvery,
+                           const bool bAverage,
+                           const bool bAverageReset);
+
+    speedTest(const uint8_t reportEvery,
                            const char* extraText,
                            const char* moreExtraText,
                            const bool bAverage,
-                           const bool bAverageReset)`.         
+                           const bool bAverageReset);
+```
 - modified `speedtest(...)` to return a bool, reporting false, unless it performed a report.
 - Modified [examples/debug_speedtest](https://github.com/davidlmorris/debuggery/tree/main/examples/debug_speedtest) to account for the new variants.
 

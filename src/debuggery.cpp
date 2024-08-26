@@ -252,6 +252,7 @@ bool Debuggery_::speedTest(const uint8_t reportEvery,
                 {
                 bAverageSetOnce = true;
                 bAverageResetOnce = false;
+                println(F("(Cumulative average has been reset for the next report.)"));
                 }
             }
         loopTime = nowTime + 1000;  // Mark the start of a new second

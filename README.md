@@ -175,10 +175,10 @@ But more importantly... since I expect someone will want to spell colour as colo
 - ### void speedTest(const uint8_t reportEvery)
 - ### void speedTest(const uint8_t reportEvery, char * extraText)
 - ### void speedTest(const uint8_t reportEvery, char * extraText, char * moreExtraText)
-- ### void speedTest(const uint8_t reportEvery, const char* extraText, const bool bAverageReset, const bool bAverageReset)
+- ### void speedTest(const uint8_t reportEvery, const char* extraText, const bool bAverage, const bool bAverageReset)
 - ### void speedTest(const uint8_t reportEvery, const char* extraText, const char* moreExtraText, const bool bAverage, const bool bAverageReset)
 
-    Overloaded functions when inserted (once only) in a loop as the last item, will report the number of loops per second displaying every 'reportEvery' number of seconds, with additional text depending on the overload.
+    Overloaded functions when inserted (once only) in a loop as the last item, will report the number of loops per second displaying every 'reportEvery' number of seconds, with additional text depending on the overload.  If bAverage is true, it will also report a cumulative average.  If bAverageReset is true (need be only for one loop), then the cumulative average is reset for the next report period.
 
 - ### "+ all the print and println functions from the Arduino Serial interface"
 
